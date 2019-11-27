@@ -1,0 +1,29 @@
+@startuml
+
+class CLIENT
+
+package SERVER <<Cloud>> {
+Interface Stone{
+position
+color
+...
+}
+Class GUI{
+buttons
+board
+
+}
+Class Game{
+Logical part of app
+}
+Class Controller{
+Controlling GUI based on Client input
+}
+}
+SERVER --|> CLIENT : Giving GUI and listening to commands
+CLIENT ---|> Controller: Sending message with wanted action
+Controller <--> Game : Moving, adding and deleting stones
+Controller --|> GUI : Changing stuff to display current game state and giving actions
+Stone --|> Controller : Receipe how to make a proper stone
+
+@enduml
