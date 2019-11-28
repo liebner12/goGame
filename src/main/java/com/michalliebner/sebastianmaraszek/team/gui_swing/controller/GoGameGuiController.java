@@ -1,21 +1,27 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 
 
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.Board;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.GoGameGui;
 
+import javax.swing.*;
+
 public class GoGameGuiController {
-    private GoGameGui mainFrame;
+    private GoGameGui Board;
+
     public GoGameGuiController(){
         initComponents();
         initListeners();
     }
     private void initComponents(){
-        mainFrame = new GoGameGui();
+        Board = new GoGameGui();
     }
     public void showMainFrameWindow(){
-        mainFrame.setVisible(true);
+        Board.setVisible(true);
+
     }
     private void initListeners(){
 
     }
+
 }
