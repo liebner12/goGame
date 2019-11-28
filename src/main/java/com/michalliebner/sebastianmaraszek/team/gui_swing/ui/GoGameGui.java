@@ -13,14 +13,11 @@ public class GoGameGui extends JFrame {
     private JButton exitButton;
     private JPanel UI;
     private Container container = getContentPane();
+
     public GoGameGui() {
         UI = new JPanel();
         Board = new Board();
         exitButton= new JButton();
-
-        container.add(exitButton);
-        container.add(Board);
-        container.add(UI);
 
         setLayout(null);
         setTitle("GoGame");
@@ -37,10 +34,15 @@ public class GoGameGui extends JFrame {
         return exitButton;
     }
     public JPanel getUIPanel(){
-        UI.setMinimumSize(new Dimension(650,800));
+        UI.setMinimumSize(new Dimension(600,800));
         UI.setBackground(new Color(45, 45, 45));
-        UI.setBounds(650,0,550,800);
+        UI.setBounds(700,0,500,800);
+        add(UI);
         return UI;
+    }
+    public JPanel getBoard(){
+        add(Board);
+        return Board;
     }
 }
 
