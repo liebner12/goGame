@@ -23,11 +23,10 @@ public class GoGameGuiController {
         mainFrame = new GoGameGui();
         exitButton = mainFrame.getExitButton();
         UI = mainFrame.getUIPanel();
-        board = mainFrame.getBoard();
+        board = (Board) mainFrame.getBoard();
     }
     public void showMainFrameWindow(){
         mainFrame.setVisible(true);
-
     }
     private void initListeners() {
         exitButton.addActionListener(new ExitButtonLister());
@@ -49,7 +48,6 @@ public class GoGameGuiController {
         }
     }
     private class ExitButtonLister implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
