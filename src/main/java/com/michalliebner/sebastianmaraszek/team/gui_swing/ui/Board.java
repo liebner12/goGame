@@ -14,7 +14,9 @@ public class Board extends JPanel {
     private final int PointSize= 10;
 
     public Board(){
+        setLayout(null);
         setSize(OneSquareSize*BoardSizeInSquares+2,OneSquareSize*BoardSizeInSquares);
+        setSize(800,800);
         setBackground(new Color(218, 218, 218));
     }
     @Override
@@ -42,4 +44,5 @@ public class Board extends JPanel {
                 11 * OneSquareSize - PointSize / 2, PointSize, PointSize);
         g2.fillOval(BoardCentre - PointSize / 2, BoardCentre - PointSize / 2,
                 PointSize, PointSize);
-    }}
+    }
+}
