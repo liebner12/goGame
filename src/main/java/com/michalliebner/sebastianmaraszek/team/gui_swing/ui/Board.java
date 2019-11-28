@@ -32,13 +32,14 @@ public class Board extends JPanel {
         setSize(OneSquareSize * BoardSizeInSquares + 2,
             OneSquareSize * BoardSizeInSquares);
         setBounds(30,30, WIDTH, HEIGHT);
-        setBackground(new Color(124, 91, 39));
+        setBackground(new Color(193,161,121));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g2 = (Graphics2D) g.create();
+
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for (int i = OneSquareSize; i <= OneSquareSize * BoardSizeInSquares;
             i = i + OneSquareSize) {
