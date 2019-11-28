@@ -10,20 +10,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GoGameGuiController {
-    private GoGameGui Board;
+    private GoGameGui mainFrame;
     private JButton exitButton;
-    private JPanel panel1;
-    private JPanel panel2;
+    private JPanel UI;
+    private JPanel board;
     public GoGameGuiController(){
         initComponents();
         initListeners();
     }
     private void initComponents(){
-        Board = new GoGameGui();
-        exitButton = Board.getExitButton();
+        mainFrame = new GoGameGui();
+        exitButton = mainFrame.getExitButton();
+        UI = mainFrame.getUIPanel();
+        board = mainFrame.getBoard();
     }
     public void showMainFrameWindow(){
-        Board.setVisible(true);
+        mainFrame.setVisible(true);
 
     }
     private void initListeners(){
