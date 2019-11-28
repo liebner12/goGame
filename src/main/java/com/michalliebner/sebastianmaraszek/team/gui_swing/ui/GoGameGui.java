@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 public class GoGameGui extends JFrame {
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 700;
-    private JPanel Board;
+    private Board Board;
     private JButton exitButton;
     private JPanel UI;
     private Container container = getContentPane();
@@ -40,7 +40,7 @@ public class GoGameGui extends JFrame {
         add(UI);
         return UI;
     }
-    public JPanel getBoard(){
+    public Board getBoard(){
         add(Board);
         return Board;
     }

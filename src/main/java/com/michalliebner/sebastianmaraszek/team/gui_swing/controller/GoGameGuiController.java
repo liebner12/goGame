@@ -13,10 +13,11 @@ public class GoGameGuiController {
     private GoGameGui mainFrame;
     private JButton exitButton;
     private JPanel UI;
-    private JPanel board;
+    private Board board;
     public GoGameGuiController(){
         initComponents();
         initListeners();
+        addBoardButtons();
     }
     private void initComponents(){
         mainFrame = new GoGameGui();
@@ -28,12 +29,14 @@ public class GoGameGuiController {
         mainFrame.setVisible(true);
 
     }
-    private void initListeners(){
+    private void initListeners() {
         exitButton.addActionListener(new ExitButtonLister());
     }
-    private class BoardPiecesListener implements ActionListener{
 
-        @Override
+    private void addBoardButtons() {
+        board.addButtons(new BoardPiecesListener());
+    }
+    private class BoardPiecesListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             System.out.println("CZESC");
         }
