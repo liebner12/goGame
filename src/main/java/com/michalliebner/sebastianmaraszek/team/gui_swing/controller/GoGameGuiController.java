@@ -29,7 +29,13 @@ public class GoGameGuiController {
     private void initListeners(){
         exitButton.addActionListener(new ExitButtonLister());
     }
+    private class BoardPiecesListener implements ActionListener{
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("CZESC");
+        }
+    }
     private class ExitButtonLister implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
