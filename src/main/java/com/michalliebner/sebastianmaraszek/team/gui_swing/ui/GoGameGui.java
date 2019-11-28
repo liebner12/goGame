@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class GoGameGui extends JFrame {
+public class  GoGameGui extends JFrame {
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 700;
     private Board Board;
