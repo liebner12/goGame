@@ -6,7 +6,7 @@ import java.awt.*;
 class ExitButton extends JButton {
 
     ExitButton(){
-        setBounds(1175,5,16,16);
+        setBounds(1172,8,16,16);
         setBorderPainted(false);
         setContentAreaFilled(false);
         ExitIcon icon = new ExitIcon();

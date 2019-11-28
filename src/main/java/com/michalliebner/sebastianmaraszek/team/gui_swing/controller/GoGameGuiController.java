@@ -13,7 +13,10 @@ public class GoGameGuiController {
     private GoGameGui mainFrame;
     private JButton exitButton;
     private JPanel UI;
+    private JPanel window;
     private Board board;
+    private JButton nextButton;
+
     public GoGameGuiController(){
         initComponents();
         initListeners();
@@ -21,9 +24,11 @@ public class GoGameGuiController {
     }
     private void initComponents(){
         mainFrame = new GoGameGui();
+        window = mainFrame.getWindow();
         exitButton = mainFrame.getExitButton();
         UI = mainFrame.getUIPanel();
         board = (Board) mainFrame.getBoard();
+        nextButton = mainFrame.getNextButton();
     }
     public void showMainFrameWindow(){
         mainFrame.setVisible(true);

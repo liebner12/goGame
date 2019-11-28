@@ -15,8 +15,8 @@ public class Board extends JPanel {
     List<Piece> pieceList=new ArrayList<>();
     private ActionListener actionListener;
     public JButton[][] Buttons;
-    private static final int WIDTH = 705;
-    private static final int HEIGHT = 800;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 700;
     private Graphics2D g2;
     private Graphics2D g;
     private final int BoardSizeInSquares = 12;
@@ -31,14 +31,15 @@ public class Board extends JPanel {
 
         setSize(OneSquareSize * BoardSizeInSquares + 2,
             OneSquareSize * BoardSizeInSquares);
-        setSize(WIDTH, HEIGHT);
-        setBackground(new Color(124, 124, 124));
+        setBounds(30,30, WIDTH, HEIGHT);
+        setBackground(new Color(124, 91, 39));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for (int i = OneSquareSize; i <= OneSquareSize * BoardSizeInSquares;
             i = i + OneSquareSize) {
             for (int j = OneSquareSize; j <= OneSquareSize * BoardSizeInSquares;

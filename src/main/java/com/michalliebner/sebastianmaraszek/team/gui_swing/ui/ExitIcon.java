@@ -11,7 +11,7 @@ public class ExitIcon implements Icon {
 
     public void paintIcon(Component c, Graphics g, int x, int y) {
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(new Color(217, 226, 221));
         g2d.setStroke(stroke);
         g2d.drawLine(x + 10, y + 10, x + width - 10, y + height - 10);
         g2d.drawLine(x + 10, y + height - 10, x + width - 10, y + 10);
