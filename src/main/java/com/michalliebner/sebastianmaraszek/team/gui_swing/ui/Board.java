@@ -6,7 +6,8 @@ import java.awt.*;
 import static java.awt.Color.black;
 
 public class Board extends JPanel {
-
+    private static final int WIDTH = 705;
+    private static final int HEIGHT = 800;
     private Graphics2D g2;
     private final int BoardSizeInSquares=12;
     private final int OneSquareSize=50;
@@ -16,8 +17,8 @@ public class Board extends JPanel {
     public Board(){
         setLayout(null);
         setSize(OneSquareSize*BoardSizeInSquares+2,OneSquareSize*BoardSizeInSquares);
-        setSize(800,800);
-        setBackground(new Color(218, 218, 218));
+        setSize(WIDTH,HEIGHT);
+        setBackground(new Color(124, 124, 124));
     }
     @Override
     protected void paintComponent(Graphics g) {

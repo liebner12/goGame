@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
 public class GoGameGuiController {
     private GoGameGui Board;
     private JButton exitButton;
-    private JPanel panel1;
-    private JPanel panel2;
+    private JPanel UI;
+
     public GoGameGuiController(){
         initComponents();
         initListeners();
@@ -21,6 +21,7 @@ public class GoGameGuiController {
     private void initComponents(){
         Board = new GoGameGui();
         exitButton = Board.getExitButton();
+        UI = Board.getUIPanel();
     }
     public void showMainFrameWindow(){
         Board.setVisible(true);
