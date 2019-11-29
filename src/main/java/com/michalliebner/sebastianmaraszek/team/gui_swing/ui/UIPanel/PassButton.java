@@ -1,19 +1,20 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
 
+
 import javax.swing.*;
 import java.awt.*;
 
-public class SurrenderButton extends JButton {
+public class PassButton extends JButton {
     private static final int WIDTH = 80;
     private static final int HEIGHT = 40;
 
-    SurrenderButton() {
+    PassButton() {
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setBounds(302, 630, WIDTH, HEIGHT);
-        setText("SURR");
+        setBounds(112, 630, WIDTH, HEIGHT);
+        setText("PASS");
     }
 
     @Override

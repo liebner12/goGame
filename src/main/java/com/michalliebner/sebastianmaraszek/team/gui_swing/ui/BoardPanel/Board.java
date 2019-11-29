@@ -75,6 +75,7 @@ public class Board extends JPanel {
                 Buttons[i][j].addActionListener(al);
                 Buttons[i][j].setBorderPainted(false);
                 Buttons[i][j].setContentAreaFilled(false);
+                Buttons[i][j].setFocusPainted(false);
                 add(Buttons[i][j]);
             }
         }
