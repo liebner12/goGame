@@ -1,11 +1,11 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ExitIcon implements Icon {
-    private int width = 32;
-    private int height = 32;
+    private int WIDTH = 32;
+    private int HEIGHT = 32;
 
     private BasicStroke stroke = new BasicStroke(4);
 
@@ -13,17 +13,17 @@ public class ExitIcon implements Icon {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(new Color(217, 226, 221));
         g2d.setStroke(stroke);
-        g2d.drawLine(x + 10, y + 10, x + width - 10, y + height - 10);
-        g2d.drawLine(x + 10, y + height - 10, x + width - 10, y + 10);
+        g2d.drawLine(x + 10, y + 10, x + WIDTH - 10, y + HEIGHT - 10);
+        g2d.drawLine(x + 10, y + HEIGHT - 10, x + WIDTH - 10, y + 10);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     public int getIconWidth() {
-        return width;
+        return WIDTH;
     }
 
     public int getIconHeight() {
-        return height;
+        return HEIGHT;
     }
 }
 

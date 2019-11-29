@@ -1,14 +1,11 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 
-import static java.awt.Color.BLACK;
 import static java.awt.Color.black;
 
 public class Board extends JPanel {

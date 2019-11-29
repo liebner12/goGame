@@ -1,21 +1,25 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 
 
-import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.Board;
-import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.GoGameGui;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.*;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Board;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.NextButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.SurrenderButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.ExitButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
 
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GoGameGuiController {
     private GoGameGui mainFrame;
-    private JButton exitButton;
-    private JPanel UI;
-    private JPanel window;
+    private ExitButton exitButton;
+    private com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.UI UI;
+    private Window window;
+    private NextButton nextButton;
+    private SurrenderButton surrenderButton;
     private Board board;
-    private JButton nextButton;
 
     public GoGameGuiController(){
         initComponents();
@@ -27,8 +31,9 @@ public class GoGameGuiController {
         window = mainFrame.getWindow();
         exitButton = mainFrame.getExitButton();
         UI = mainFrame.getUIPanel();
-        board = (Board) mainFrame.getBoard();
+        board = mainFrame.getBoard();
         nextButton = mainFrame.getNextButton();
+        surrenderButton = mainFrame.getSurrenderButton();
     }
     public void showMainFrameWindow(){
         mainFrame.setVisible(true);

@@ -1,17 +1,18 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
 
 
 import javax.swing.*;
 import java.awt.*;
 
 public class NextButton extends JButton {
-    private static final int WIDTH = 100;
+    private static final int WIDTH = 120;
     private static final int HEIGHT = 40;
-        public NextButton() {
+        NextButton() {
+
             setForeground(new Color(222, 227, 225));
             setBorderPainted(false);
             setContentAreaFilled(false);
-            setBounds(930,630,WIDTH,HEIGHT);
+            setBounds(30,610,WIDTH,HEIGHT);
             setText("PASS");
         }
 
@@ -24,7 +25,7 @@ public class NextButton extends JButton {
             g2.setRenderingHints(qualityHints);
 
 
-            Color color2 = new Color(72, 44, 114);
+            Color color2 = new Color(107, 67, 114);
             GradientPaint gp = new GradientPaint(90, 300, color2, 4, 40, color2);
             g2.setPaint(gp);
 

@@ -1,5 +1,12 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
 
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Board;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.NextButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.SurrenderButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.UI;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.ExitButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
+
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
@@ -7,12 +14,14 @@ import javax.swing.*;
 public class GoGameGui extends JFrame {
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 760;
-    private Board Board;
+
+    private com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Board Board;
     private ExitButton exitButton;
-    private UI UI;
+    private com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.UI UI;
     private Container container = getContentPane();
-    private Window window;
+    private com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window window;
     private NextButton nextButton;
+    private SurrenderButton surrenderButton;
     public GoGameGui() {
         setLayout(null);
         setTitle("GoGame");
@@ -23,29 +32,32 @@ public class GoGameGui extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    public JButton getExitButton(){
+    public ExitButton getExitButton(){
         return exitButton;
     }
-    public JPanel getUIPanel(){
+    public UI getUIPanel(){
         return UI;
     }
-    public JPanel getBoard(){
+    public Board getBoard(){
         return Board;
     }
-    public JPanel getWindow(){
+    public com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window getWindow(){
         return window;
     }
-    public JButton getNextButton(){
+    public NextButton getNextButton(){
         return nextButton;
+    }
+    public SurrenderButton getSurrenderButton(){
+        return surrenderButton;
     }
     private Container components(){
         window = new Window();
         UI = new UI();
         Board = new Board();
         exitButton= new ExitButton();
-        nextButton= new NextButton();
+        UI.initUI();
+
         add(exitButton);
-        add(nextButton);
         add(UI);
         add(Board);
         add(window);

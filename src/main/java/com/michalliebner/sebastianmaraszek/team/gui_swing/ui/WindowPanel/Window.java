@@ -1,4 +1,4 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.awt.*;
 public class Window extends JPanel {
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 900;
-    Window() {
+    public Window() {
         setBounds(0, 0, WIDTH, HEIGHT);
     }
 

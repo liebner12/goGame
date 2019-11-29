@@ -1,4 +1,4 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
 import java.awt.Color;
 

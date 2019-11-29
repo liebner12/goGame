@@ -1,4 +1,4 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
 import java.awt.Color;
 
@@ -8,7 +8,7 @@ public class BlackPiece implements Piece{
     private int posX;
     private int posY;
 
-    public BlackPiece(){
+    BlackPiece(){
 
     }
 
