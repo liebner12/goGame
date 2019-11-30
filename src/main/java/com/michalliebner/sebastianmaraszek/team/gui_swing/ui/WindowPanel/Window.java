@@ -16,20 +16,20 @@ public class Window extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        int w = getWidth();
-        int h = getHeight();
+
         Color color1 = new Color(60, 58, 60);
         Color color2 = new Color(49, 48, 54);
-        GradientPaint gp = new GradientPaint(90, 300, color1, 4, h, color2);
+        GradientPaint gp = new GradientPaint(0, 0, color1, 4,HEIGHT, color2);
         g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
+        g2d.fillRect(0, 0, WIDTH, HEIGHT);
     }
-    public ExitButton getExitButton(){
-        return exitButton;
-    }
+
     public void initWindow(){
-        exitButton= new ExitButton();
+        exitButton = new ExitButton();
         add(exitButton);
+    }
+    public void initListeners() {
+        exitButton.addActionListener(new ExitButton.ExitButtonLister());
     }
 }
 

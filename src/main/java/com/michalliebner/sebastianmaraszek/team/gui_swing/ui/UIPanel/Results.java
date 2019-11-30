@@ -12,21 +12,39 @@ public class Results extends JPanel {
     private JTextField whiteResult;
 
     Results() {
+
         initComponents();
         setLayout(null);
         setBounds(40, 100, WIDTH, HEIGHT);
-        setBackground(new Color(5, 161, 121));
+        setBackground(new Color(193, 161, 121));
     }
 
     public void initComponents() {
-        blackResultLabel = new JLabel();
-        whiteResultLabel = new JLabel();
+
+        blackResultLabel = new JLabel("Black");
+        blackResultLabel.setBounds(50,50,50,30);
+        whiteResultLabel = new JLabel("White");
+        whiteResultLabel.setBounds(100,50,50,30);
         blackResult = new JTextField();
+        blackResult.setBounds(50,100,50,50);
         whiteResult = new JTextField();
+        whiteResult.setBounds(100,100,50,50);
         add(blackResultLabel);
         add(whiteResultLabel);
         add(blackResult);
         add(whiteResult);
+    }
 
+    public JLabel getBlackResultLabel(){
+        return blackResultLabel;
+    }
+    public JLabel getWhiteResultLabel(){
+        return whiteResultLabel;
+    }
+    public JTextField getBlackResult(){
+        return blackResult;
+    }
+    public JTextField getWhiteResult(){
+        return whiteResult;
     }
 }

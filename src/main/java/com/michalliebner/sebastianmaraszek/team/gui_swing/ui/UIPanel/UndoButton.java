@@ -24,8 +24,8 @@ public class UndoButton extends JButton {
         qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.setRenderingHints(qualityHints);
 
-        Color color1 = new Color(80, 78, 80);
-        Color color2 = new Color(46, 45, 51);
+        Color color1 = new Color(60, 58, 60);
+        Color color2 = new Color(49, 48, 54);
         GradientPaint gp = new GradientPaint(0, 0, color1, 4, 40, color2);
         g2.setPaint(gp);
 

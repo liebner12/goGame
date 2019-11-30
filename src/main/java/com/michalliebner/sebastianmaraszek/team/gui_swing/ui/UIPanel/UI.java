@@ -35,7 +35,6 @@ public class UI extends JPanel {
         add(passButton);
         add(undoButton);
         add(surrenderButton);
-
     }
     public Results getResults(){
         return results;
