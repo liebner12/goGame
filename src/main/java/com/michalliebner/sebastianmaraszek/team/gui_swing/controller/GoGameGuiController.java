@@ -9,10 +9,13 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class GoGameGuiController {
+    Boolean turn;
+    private VirtualBoard virtualBoard;
     private GoGameGui mainFrame;
     private UI ui;
     private Window window;
     private Board board;
+
 
     public GoGameGuiController() throws IOException {
         initComponents();
@@ -20,6 +23,8 @@ public class GoGameGuiController {
         addBoardButtons();
     }
     private void initComponents() throws IOException {
+        turn=new Boolean(false);
+        virtualBoard=new VirtualBoard();
         mainFrame = new GoGameGui();
         window = mainFrame.getWindow();
         ui = mainFrame.getUIPanel();
@@ -40,8 +45,8 @@ public class GoGameGuiController {
             for(int i=0; i<13; i++){
                 for(int j=0; j<13; j++){
                     if(e.getSource()==board.Buttons[i][j]){
-                        System.out.println(i+" "+j);
-                        board.addPiece(i,j);
+                        virtualBoard.addPiece(i,j);
+                        board.play(virtualBoard.getGameBoard());
                     }
                 }
             }

@@ -89,11 +89,8 @@ public class Board extends JPanel {
             }
         }
     }
-    public void addPiece(int x, int y){
-        BlackPiece piece=new BlackPiece();
-        piece.setX(x);
-        piece.setY(y);
-        pieceList.add(piece);
+    public void play(List<Piece> pieceList){
+        this.pieceList=pieceList;
         repaint();
     }
 

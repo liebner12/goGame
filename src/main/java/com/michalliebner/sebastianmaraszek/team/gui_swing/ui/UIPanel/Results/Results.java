@@ -13,6 +13,7 @@ public class Results extends JPanel {
     private JLabel blackResultLabel;
     private JLabel whiteResultLabel;
     private JLabel score;
+    private JLabel goGamelabel;
     private ResultScore blackResultScore;
     private ResultScore whiteResultScore;
     private JLabel territory;
@@ -30,6 +31,7 @@ public class Results extends JPanel {
     private BufferedImage myPicture3;
     private BufferedImage myPicture4;
     private BufferedImage myPicture5;
+    private BufferedImage goGame;
     public Results() throws IOException {
         initComponents();
         setLayout(null);
@@ -38,6 +40,9 @@ public class Results extends JPanel {
     }
 
     public void initComponents() throws IOException {
+        goGame= ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\Gogame.png"));
+        goGamelabel= new JLabel(new ImageIcon(goGame));
+        goGamelabel.setBounds(140,35,200,32);
         myPicture4 = ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\79407459_679389379255901_3066448809295872000_n.png"));
         blackResultLabel = new JLabel(new ImageIcon(myPicture4));
         blackResultLabel.setBounds(45, 20, WIDTHLABEL, HEIGHTLABEL+20);

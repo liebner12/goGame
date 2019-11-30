@@ -2,13 +2,13 @@ package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
 import java.awt.Color;
 
-public class BlackPiece implements Piece{
+public class WhitePiece implements Piece{
     private int size=50;
-    private Color color=Color.BLACK;
+    private Color color=Color.WHITE;
     private int posX;
     private int posY;
 
-    public BlackPiece(){
+    public WhitePiece(){
 
     }
 
