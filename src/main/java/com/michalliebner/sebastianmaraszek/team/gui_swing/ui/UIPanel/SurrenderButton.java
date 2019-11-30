@@ -8,6 +8,8 @@ public class SurrenderButton extends JButton {
     private static final int HEIGHT = 40;
 
     SurrenderButton() {
+        Cursor cursor= new Cursor(Cursor.HAND_CURSOR);
+        setCursor(cursor);
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);

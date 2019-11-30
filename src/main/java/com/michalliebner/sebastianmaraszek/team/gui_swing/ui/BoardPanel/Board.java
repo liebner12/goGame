@@ -9,6 +9,7 @@ import java.awt.*;
 import static java.awt.Color.black;
 
 public class Board extends JPanel {
+    Cursor cursor;
     List<Piece> pieceList=new ArrayList<>();
     private ActionListener actionListener;
     public JButton[][] Buttons;
@@ -25,7 +26,7 @@ public class Board extends JPanel {
     public Board() {
 
         this.setLayout(null);
-
+        cursor=new Cursor(Cursor.HAND_CURSOR);
         setSize(OneSquareSize * BoardSizeInSquares + 2,
             OneSquareSize * BoardSizeInSquares);
         setBounds(30,30, WIDTH, HEIGHT);
@@ -36,7 +37,6 @@ public class Board extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g2 = (Graphics2D) g.create();
-
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for (int i = OneSquareSize; i <= OneSquareSize * BoardSizeInSquares;
             i = i + OneSquareSize) {
@@ -76,6 +76,7 @@ public class Board extends JPanel {
                 Buttons[i][j].setBorderPainted(false);
                 Buttons[i][j].setContentAreaFilled(false);
                 Buttons[i][j].setFocusPainted(false);
+                Buttons[i][j].setCursor(cursor);
                 add(Buttons[i][j]);
             }
         }

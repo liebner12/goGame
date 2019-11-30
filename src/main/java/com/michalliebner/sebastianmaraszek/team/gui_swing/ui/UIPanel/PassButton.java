@@ -9,6 +9,8 @@ public class PassButton extends JButton {
     private static final int HEIGHT = 40;
 
     PassButton() {
+        Cursor cursor= new Cursor(Cursor.HAND_CURSOR);
+        setCursor(cursor);
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);
