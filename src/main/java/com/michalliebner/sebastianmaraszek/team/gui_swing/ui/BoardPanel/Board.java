@@ -45,15 +45,6 @@ public class Board extends JPanel {
         //TO MIEJSCE TO GRADIENT ^^
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        for (int i = OneSquareSize; i <= OneSquareSize * BoardSizeInSquares;
-            i = i + OneSquareSize) {
-            for (int j = OneSquareSize; j <= OneSquareSize * BoardSizeInSquares;
-                j = j + OneSquareSize) {
-                double thickness = 2;
-                g2.setStroke(new BasicStroke((float) thickness));
-                g2.drawRect(i, j, OneSquareSize, OneSquareSize);
-            }
-        }
 
         g2.setPaint(black);
         g2.fillOval(3 * OneSquareSize - PointSize / 2,
@@ -66,6 +57,16 @@ public class Board extends JPanel {
             11 * OneSquareSize - PointSize / 2, PointSize, PointSize);
         g2.fillOval(BoardCentre - PointSize / 2, BoardCentre - PointSize / 2,
             PointSize, PointSize);
+        for (int i = OneSquareSize; i <= OneSquareSize * BoardSizeInSquares;
+            i = i + OneSquareSize) {
+            for (int j = OneSquareSize; j <= OneSquareSize * BoardSizeInSquares;
+                j = j + OneSquareSize) {
+                double thickness = 2;
+                g2.setStroke(new BasicStroke((float) thickness));
+                g2.drawRect(i, j, OneSquareSize, OneSquareSize);
+            }
+        }
+
         if(pieceList.size()>0){
             for(Piece p : pieceList){
             g2.setPaint(p.getColor());
