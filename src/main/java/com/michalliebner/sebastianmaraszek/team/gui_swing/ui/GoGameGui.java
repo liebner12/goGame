@@ -6,6 +6,7 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.io.IOException;
 import javax.swing.*;
 
 public class GoGameGui extends JFrame {
@@ -17,7 +18,7 @@ public class GoGameGui extends JFrame {
     private Window window;
     private Container container = getContentPane();
 
-    public GoGameGui() {
+    public GoGameGui() throws IOException {
         setLayout(null);
         setTitle("GoGame");
         setUndecorated(true);
@@ -37,7 +38,7 @@ public class GoGameGui extends JFrame {
         return window;
     }
 
-    private Container components(){
+    private Container components() throws IOException {
         window = new Window();
         window.initWindow();
         Board = new Board();

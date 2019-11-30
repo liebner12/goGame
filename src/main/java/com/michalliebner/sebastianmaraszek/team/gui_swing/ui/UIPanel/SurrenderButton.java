@@ -31,7 +31,7 @@ public class SurrenderButton extends JButton {
         GradientPaint gp = new GradientPaint(0, 0, color1, 4, 40, color2);
         g2.setPaint(gp);
 
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
         g2.dispose();
         super.paintComponent(g);
     }

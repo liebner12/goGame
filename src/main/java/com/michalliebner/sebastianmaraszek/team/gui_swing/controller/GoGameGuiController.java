@@ -6,6 +6,7 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.*;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GoGameGuiController {
     private GoGameGui mainFrame;
@@ -13,12 +14,12 @@ public class GoGameGuiController {
     private Window window;
     private Board board;
 
-    public GoGameGuiController(){
+    public GoGameGuiController() throws IOException {
         initComponents();
         initListeners();
         addBoardButtons();
     }
-    private void initComponents(){
+    private void initComponents() throws IOException {
         mainFrame = new GoGameGui();
         window = mainFrame.getWindow();
         ui = mainFrame.getUIPanel();
