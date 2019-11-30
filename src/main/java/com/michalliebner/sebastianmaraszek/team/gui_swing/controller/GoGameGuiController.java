@@ -13,7 +13,6 @@ public class GoGameGuiController {
     private Window window;
     private Board board;
 
-
     public GoGameGuiController(){
         initComponents();
         initListeners();

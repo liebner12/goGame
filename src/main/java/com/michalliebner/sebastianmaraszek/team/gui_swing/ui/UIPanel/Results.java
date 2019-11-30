@@ -12,15 +12,13 @@ public class Results extends JPanel {
     private JTextField whiteResult;
 
     Results() {
-
         initComponents();
         setLayout(null);
         setBounds(40, 100, WIDTH, HEIGHT);
-        setBackground(new Color(193, 161, 121));
+        setOpaque(false);
     }
 
     public void initComponents() {
-
         blackResultLabel = new JLabel("Black");
         blackResultLabel.setBounds(50,50,50,30);
         whiteResultLabel = new JLabel("White");
