@@ -52,6 +52,7 @@ public class GoGameGuiController {
                 for(int j=0; j<13; j++){
                     if(e.getSource()==board.Buttons[i][j]){
                         virtualBoard.addPiece(i,j);
+
                         board.play(virtualBoard.getGameBoard());
                     }
                 }
