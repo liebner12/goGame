@@ -1,22 +1,23 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
-
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PassButton extends JButton {
-    private static final int WIDTH = 80;
+public class ConnectButton extends JButton {
+    private static final int WIDTH = 172;
     private static final int HEIGHT = 40;
 
-    PassButton() {
+    ConnectButton() {
         Cursor cursor= new Cursor(Cursor.HAND_CURSOR);
         setCursor(cursor);
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setBounds(112, 630, WIDTH, HEIGHT);
-        setText("PASS");
+        setBounds(20, 100, WIDTH, HEIGHT);
+        setText("Connect");
     }
 
     @Override
@@ -32,9 +33,14 @@ public class PassButton extends JButton {
         GradientPaint gp = new GradientPaint(0, 0, color1, 4, 40, color2);
         g2.setPaint(gp);
 
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+        g2.fillRoundRect(0, 0, WIDTH, HEIGHT, 20, 20);
         g2.dispose();
         super.paintComponent(g);
     }
-
+    public static class StartButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            StartFrame startFrame = new StartFrame();
+            startFrame.setVisible(true);
+        }
+    }
 }

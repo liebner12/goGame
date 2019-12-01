@@ -1,10 +1,14 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
 
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.StartFrame;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StartButton extends JButton {
-    private static final int WIDTH = 80;
+    private static final int WIDTH = 172;
     private static final int HEIGHT = 40;
 
     StartButton() {
@@ -34,5 +38,11 @@ public class StartButton extends JButton {
         g2.fillRoundRect(0, 0, WIDTH, HEIGHT, 20, 20);
         g2.dispose();
         super.paintComponent(g);
+    }
+    public static class StartButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            StartFrame startFrame = new StartFrame();
+            startFrame.setVisible(true);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
 
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.StartFrame;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.Results.Results;
 
 import javax.swing.*;
@@ -11,11 +12,8 @@ public class UI extends JPanel {
     private static final int HEIGHT = 700;
     private JLabel graWGo;
     private SurrenderButton surrenderButton;
-    private PassButton passButton;
     private Results results;
     private StartButton startButton;
-    private UndoButton undoButton;
-
     public UI(){
         setLayout(null);
         setBounds(770,30,WIDTH,HEIGHT);
@@ -36,18 +34,18 @@ public class UI extends JPanel {
         graWGo.setBounds(140,35,200,32);
         graWGo.setFont(new Font("Arial", Font.BOLD, 40));
         graWGo.setForeground(new Color(245, 245, 249));
-
         results = new Results();
         startButton = new StartButton();
-        passButton = new PassButton();
-        undoButton = new UndoButton();
         surrenderButton = new SurrenderButton();
         add(graWGo);
         add(results);
-        add(startButton);
-        add(passButton);
-        add(undoButton);
         add(surrenderButton);
+        add(startButton);
     }
+
+    public void initListeners() {
+        startButton.addActionListener(new StartButton.StartButtonListener());
+    }
+
 
 }

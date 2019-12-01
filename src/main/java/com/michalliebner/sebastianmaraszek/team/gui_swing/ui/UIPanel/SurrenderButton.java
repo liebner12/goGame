@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SurrenderButton extends JButton {
-    private static final int WIDTH = 80;
+    private static final int WIDTH = 172;
     private static final int HEIGHT = 40;
 
     SurrenderButton() {
@@ -14,8 +14,8 @@ public class SurrenderButton extends JButton {
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setBounds(302, 630, WIDTH, HEIGHT);
-        setText("SURR");
+        setBounds(207, 630, WIDTH, HEIGHT);
+        setText("SURRENDER");
     }
 
     @Override
