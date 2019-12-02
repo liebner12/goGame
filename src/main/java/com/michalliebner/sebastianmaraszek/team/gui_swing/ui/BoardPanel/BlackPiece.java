@@ -1,8 +1,9 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class BlackPiece implements Piece{
+public class BlackPiece implements Piece, Serializable {
     private int size=50;
     private Color color=Color.BLACK;
     private int posX;

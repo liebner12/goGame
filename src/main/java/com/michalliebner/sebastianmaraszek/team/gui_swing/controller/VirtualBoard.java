@@ -4,6 +4,11 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.BlackPie
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Piece;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.WhitePiece;
 import java.awt.Color;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +16,12 @@ public class VirtualBoard{
     Boolean turn=false;
     List<Piece> PieceList=new ArrayList<>();
     boolean takenAll[][];
-   boolean takenWhite[][];
-  boolean takenBlack[][];
+    boolean takenWhite[][];
+    boolean takenBlack[][];
+    int x;
+    int y;
+
+
 
     public VirtualBoard() {
         takenAll = new boolean[13][13];
