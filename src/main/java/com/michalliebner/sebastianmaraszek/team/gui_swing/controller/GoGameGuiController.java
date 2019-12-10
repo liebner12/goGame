@@ -38,8 +38,7 @@ public class GoGameGuiController {
         addBoardButtons();
     }
     private void initComponents() throws IOException {
-        turn=new Boolean(false);
-
+        turn= false;
         mainFrame = new GoGameGui();
         startFrame = new StartFrame();
         window = mainFrame.getWindow();
@@ -66,8 +65,6 @@ public class GoGameGuiController {
 
                         try {
                             processInformation(i,j);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -79,13 +76,12 @@ public class GoGameGuiController {
         }
     }
     public void processInformation(int x, int y) throws Exception {
-        Socket s = new Socket("localhost", 500);
+        Socket s = new Socket("localhost", 510);
         ObjectOutputStream p = new ObjectOutputStream(s.getOutputStream());
 
         TwoInt twoInt=new TwoInt(x,y);
         p.writeObject(twoInt);
         p.flush();
-
 
         ObjectInputStream b = new ObjectInputStream(s.getInputStream());
         List<Piece> received = (List<Piece>) b.readObject();

@@ -8,6 +8,7 @@ public class WhitePiece implements Piece, Serializable {
     private Color color=Color.WHITE;
     private int posX;
     private int posY;
+    private int breath=4;
 
     public WhitePiece(){
 
@@ -24,6 +25,11 @@ public class WhitePiece implements Piece, Serializable {
     }
 
     @Override
+    public int getBreath() {
+        return breath;
+    }
+
+    @Override
     public void setX(int x) {
         posX=x;
     }
@@ -31,14 +37,53 @@ public class WhitePiece implements Piece, Serializable {
     @Override
     public void setY(int y) {
         posY=y;
+    }
+
+    @Override
+    public boolean isInCorner() {
+        if((getX()==0 && getY()==0) || (getX()==12 & getY()==0) || (getX()==12 & getY()==12) || (getX()==0 & getY()==12)){
+            setBreath(2);
+            return true;
+        }
+        else return false;
 
     }
 
     @Override
-    public int getSize(){
+    public boolean isInCentre() {
+        if(!isOnBorder() && !isInCorner()){
+            setBreath(4);
+            return true;
+        }
+        return false;
 
+    }
+
+    @Override
+    public boolean isOnBorder() {
+        if(!isInCorner()) {
+            if (getX() == 0 || getY() == 0 || getX() == 12 || getY() == 12) {
+                setBreath(3);
+                return true;
+            }}
+        return false;
+    }
+
+    @Override
+    public void takeBreath() {
+        this.breath=this.breath-1;
+    }
+
+    @Override
+    public int getSize(){
         return size;
     }
+
+    @Override
+    public void setBreath(int x) {
+        this.breath=x;
+    }
+
     @Override
     public Color getColor()
     {

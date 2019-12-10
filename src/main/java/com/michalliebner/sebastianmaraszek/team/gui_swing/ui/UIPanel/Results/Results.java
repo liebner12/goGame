@@ -13,6 +13,7 @@ public class Results extends JPanel {
     private JLabel blackResultLabel;
     private JLabel whiteResultLabel;
     private JLabel score;
+    private JLabel goGamelabel;
     private ResultScore blackResultScore;
     private ResultScore whiteResultScore;
     private JLabel territory;
@@ -30,6 +31,7 @@ public class Results extends JPanel {
     private BufferedImage myPicture3;
     private BufferedImage myPicture4;
     private BufferedImage myPicture5;
+
     public Results() throws IOException {
         initComponents();
         setLayout(null);
@@ -38,13 +40,14 @@ public class Results extends JPanel {
     }
 
     public void initComponents() throws IOException {
-        myPicture4 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\79407459_679389379255901_3066448809295872000_n.png"));
+
+        myPicture4 = ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\79407459_679389379255901_3066448809295872000_n.png"));
         blackResultLabel = new JLabel(new ImageIcon(myPicture4));
-        blackResultLabel.setBounds(45, 20, WIDTHLABEL, HEIGHTLABEL+20);
-        myPicture5 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\białe.png"));
+        blackResultLabel.setBounds(45, 0, WIDTHLABEL, HEIGHTLABEL+20);
+        myPicture5 = ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\białe.png"));
         whiteResultLabel = new JLabel(new ImageIcon(myPicture5));
-        whiteResultLabel.setBounds(235, 20, WIDTHLABEL, HEIGHTLABEL+20);
-        myPicture2 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-leaderboard-50.png"));
+        whiteResultLabel.setBounds(235, 0, WIDTHLABEL, HEIGHTLABEL+20);
+        myPicture2 = ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-leaderboard-50.png"));
         score = new JLabel(new ImageIcon(myPicture2));
         score.setBounds(137, 70, WIDTHLABEL, HEIGHTLABEL);
         blackResultScore = new ResultScore();
@@ -52,7 +55,7 @@ public class Results extends JPanel {
         whiteResultScore = new ResultScore();
         whiteResultScore.setBounds(207, 120, WIDTHFIELD, HEIGHTFIELD);
 
-        myPicture3 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\77328842_573493556801356_6734551369153249280_n.png"));
+        myPicture3 = ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\77328842_573493556801356_6734551369153249280_n.png"));
         territory = new JLabel(new ImageIcon(myPicture3));
         territory.setBounds(135, 200, WIDTHLABEL, HEIGHTLABEL+20);
         blackResultTerritory = new ResultScore();
@@ -62,7 +65,7 @@ public class Results extends JPanel {
 
 
 
-        myPicture1 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-prisoner-60.png"));
+        myPicture1 = ImageIO.read(new File("C:\\Users\\Seba\\IdeaProjects\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-prisoner-60.png"));
         prisoners = new JLabel(new ImageIcon(myPicture1));
         prisoners.setBounds(167,345,60,60);
         blackResultPrisoners = new ResultScore();

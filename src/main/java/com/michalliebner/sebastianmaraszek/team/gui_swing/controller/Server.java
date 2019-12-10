@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Server{
     public static void main(String[] argv) throws Exception {
-        ServerSocket s = new ServerSocket(500);
+        ServerSocket s = new ServerSocket(510);
         VirtualBoard board=new VirtualBoard();
         System.out.println("Server started");
         while (true) {
