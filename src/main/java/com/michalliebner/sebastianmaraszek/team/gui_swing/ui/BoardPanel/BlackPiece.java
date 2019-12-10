@@ -48,7 +48,6 @@ public class BlackPiece implements Piece, Serializable {
     @Override
     public boolean isInCorner() {
         if((getX()==0 && getY()==0) || (getX()==12 & getY()==0) || (getX()==12 & getY()==12) || (getX()==0 & getY()==12)){
-            setBreath(2);
             return true;
         }
         else return false;
@@ -57,7 +56,6 @@ public class BlackPiece implements Piece, Serializable {
     @Override
     public boolean isInCentre() {
         if(!isOnBorder() && !isInCorner()){
-            setBreath(4);
             return true;
         }
         return false;
@@ -67,7 +65,6 @@ public class BlackPiece implements Piece, Serializable {
     @Override
     public boolean isOnBorder() {
         if(!isInCorner()) {
-            setBreath(3);
             if (getX() == 0 || getY() == 0 || getX() == 12 || getY() == 12) {
 
                 return true;

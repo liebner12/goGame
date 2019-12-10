@@ -42,7 +42,6 @@ public class WhitePiece implements Piece, Serializable {
     @Override
     public boolean isInCorner() {
         if((getX()==0 && getY()==0) || (getX()==12 & getY()==0) || (getX()==12 & getY()==12) || (getX()==0 & getY()==12)){
-            setBreath(2);
             return true;
         }
         else return false;
@@ -52,7 +51,6 @@ public class WhitePiece implements Piece, Serializable {
     @Override
     public boolean isInCentre() {
         if(!isOnBorder() && !isInCorner()){
-            setBreath(4);
             return true;
         }
         return false;
@@ -63,7 +61,6 @@ public class WhitePiece implements Piece, Serializable {
     public boolean isOnBorder() {
         if(!isInCorner()) {
             if (getX() == 0 || getY() == 0 || getX() == 12 || getY() == 12) {
-                setBreath(3);
                 return true;
             }}
         return false;
