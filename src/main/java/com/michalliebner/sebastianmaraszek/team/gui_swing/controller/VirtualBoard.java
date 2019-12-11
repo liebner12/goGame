@@ -1,6 +1,7 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.BlackPiece;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Piece;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.PiecesChain;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.WhitePiece;
 import java.awt.Color;
 import java.io.ObjectInputStream;
@@ -16,12 +17,13 @@ import javafx.util.Pair;
 public class VirtualBoard{
     Boolean turn=false;
     List<Piece> PieceList;
+    List<PiecesChain> ChainList;
 
 
 
 
         public VirtualBoard() {
-
+            ChainList=new ArrayList<PiecesChain>();
             PieceList=new ArrayList<Piece>();
         }
 
@@ -103,7 +105,9 @@ public class VirtualBoard{
         List<Piece> toRemove = new ArrayList<Piece>();
         for (Piece piece : PieceList) {
             if (piece.getBreath() == 0) {
-                toRemove.add(piece);
+                for(PiecesChain chain : ChainList){
+                    if(!chain.getChain().contains(piece)){
+                          toRemove.add(piece);}}
             }
         }
         for(Piece piece : PieceList) {
@@ -113,6 +117,7 @@ public class VirtualBoard{
                         piece.setBreath(piece.getBreath()+1);
                     }
 
+
                 }}}
                 PieceList.removeAll(toRemove);
 
@@ -121,13 +126,37 @@ public class VirtualBoard{
             for (Piece piece2 : PieceList){
                 if(neighbourPieces(piece1,piece2)){
                 if(piece1.getColor()!=piece2.getColor()){
-                    piece1.takeBreath();
                     piece2.takeBreath();
+                    piece1.takeBreath();
+                }
+                else{
+                    List<PiecesChain> chains=new ArrayList<>();
+                    if(ChainList.size()>0){
+                    for(PiecesChain chain : ChainList){
+                       if(chain.getChain().contains(piece2)){
+                           chain.addPiece(piece1);
+                        }
+                       else{
+                           PiecesChain piecesChain= new PiecesChain();
+                           piecesChain.addPiece(piece1);
+                           piecesChain.addPiece(piece2);
+                           chains.add(piecesChain);
+                       }
+                    }}
+                       else{
+                           PiecesChain piecesChain= new PiecesChain();
+                           piecesChain.addPiece(piece1);
+                           piecesChain.addPiece(piece2);
+                           System.out.println(piecesChain.getBreaths());
+                           ChainList.add(piecesChain);
+                       }
+
+                }
                 }
                 }
             }
 
-        }
+
 
 
 
@@ -142,7 +171,7 @@ public class VirtualBoard{
 
 
 
-    private boolean neighbourPieces(Piece piece1, Piece piece2){
+    public boolean neighbourPieces(Piece piece1, Piece piece2){
         if((Math.abs(piece1.getX()-piece2.getX())==0 && Math.abs(piece1.getY()-piece2.getY())== 1) || (Math.abs(piece1.getX()-piece2.getX())==1 && Math.abs(piece1.getY()-piece2.getY())== 0)){
             return true;
         }

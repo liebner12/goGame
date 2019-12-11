@@ -19,7 +19,6 @@ public class Server{
 
             ObjectOutputStream objectOutputStream= new ObjectOutputStream(t.getOutputStream());
             objectOutputStream.writeObject(board.getGameBoard());
-            System.out.println("JD");
             objectOutputStream.flush();
 
             b.close();
