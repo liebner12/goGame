@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 import javafx.util.Pair;
 
 public class VirtualBoard{
-    Boolean turn=false;
-    Boolean bot=true;
-    List<Piece> PieceList;
-    List<PiecesChain> ChainList;
+    Boolean turn=false; //turn=true oznacza ze ruszaja sie biale
+    Boolean bot=true;   //czy w grze uczestniczy bot
+    List<Piece> PieceList;// lista pionkow na planszy
+    List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
 
 
 
@@ -35,9 +35,9 @@ public class VirtualBoard{
 
 
     public void addPiece(int x, int y){
-            if(!bot)
+            if(!bot) //jesli nie bierze udzialu bot, gramy multiplayera
             Multiplayer(x,y);
-            else{
+            else{ //jesli bierze udzial bot no to single playera
             try {
                SinglePlayer(x,y);
             }
@@ -45,8 +45,8 @@ public class VirtualBoard{
         }}
 
     private void Multiplayer(int x, int y){
-        if(checkFree(x,y)){
-                if(!turn){
+        if(checkFree(x,y)){ // najpierw sprawdz czy miejsce na ktorym stawiasz pionka jest wolne
+                if(!turn){ //jesli ma byc stawiany czarny
                     Piece black=new BlackPiece();
                     black.setX(x);
                     black.setY(y);
@@ -55,11 +55,11 @@ public class VirtualBoard{
                  else if(black.isOnBorder())
                      black.setBreath(3);
                  else
-                     black.setBreath(4);
+                     black.setBreath(4); // ustaw liczbe oddechow w zaleznosci od tego gdzie dany pionek sie znajduje
                     PieceList.add(black);
-                    breathCheck(black);
+                    breathCheck(black); //funkcja breathcheck
                }
-             else{
+             else{ //jesli ma byc stawiany bialy
                  Piece white=new WhitePiece();
                  white.setX(x);
                  white.setY(y);
@@ -76,8 +76,9 @@ public class VirtualBoard{
 
  public void SinglePlayer(int x, int y){
          Random random=new Random();
-         if(turn){
-             if (checkFree(x, y)){  changeTurn();
+         if(turn){ //ruch uzytkownika taki sam jak w multiplayerze
+             if (checkFree(x, y)){
+                 changeTurn();
          Piece black = new BlackPiece();
          black.setX(x);
          black.setY(y);
@@ -89,36 +90,34 @@ public class VirtualBoard{
              black.setBreath(4);
              PieceList.add(black);
              breathCheck(black);}}
-        else{
+        else{           //ruch bota
             changeTurn();
-            List<Piece> availble=new ArrayList<>();
-            List<Piece> firstchoice=new ArrayList<>();
+            List<Piece> availble=new ArrayList<>();  //wszystkie miejsca na ktore mozna postawic pionka
+            List<Piece> firstchoice=new ArrayList<>(); // wszystkie miejsca gdzie mozna postawic pionka aby stal obok swojego kolegi
             for(int i=0; i<13 ; i ++){
                 for (int j=0; j<13; j++){
                     if(checkFree(i,j)){
                         Piece piece=new WhitePiece();
                         piece.setY(j);
                         piece.setX(i);
-                        availble.add(piece);
+                        availble.add(piece);  //uzupełniamy liste dostepnych pol
                         }}}
             for(Piece piece: PieceList){
                 for(Piece piece1: availble){
                     if(neighbourPieces(piece1,piece) && piece1.getColor()==piece.getColor()){
-                            firstchoice.add(piece1);
+                            firstchoice.add(piece1); //uzupelniamy liste miejsc gdzie bedzie sasiadowal z kolegom
                         }
                     } }
             Piece white = new WhitePiece();
             int r=abs(random.nextInt())%2;
-             System.out.println("ava"+availble.size());
-             System.out.println("cho"+firstchoice.size());
+
             if(availble.size()>0){
-                int choice=abs(random.nextInt()%availble.size());
-                System.out.println("moj wybor"+ choice);
+                int choice=abs(random.nextInt()%availble.size()); //wybieramy losowo jeden element z listy dostepnych pol
                 white=availble.get(choice);}
             if(r==1){
             if(firstchoice.size()>0){
-                int choice= abs(random.nextInt()%firstchoice.size());
-                System.out.println("moj wybor"+ choice);
+                int choice= abs(random.nextInt()%firstchoice.size()); //wybieramy losowo jeden tak aby sasiadowal(w co 2 przypadku)
+
                 white=firstchoice.get(choice);}}
 
             if (white.isInCorner())
@@ -130,12 +129,13 @@ public class VirtualBoard{
                 PieceList.add(white);
                 breathCheck(white);}}
 
+                /**  zwracanie listy pionkow i ich pozycji*/
     public List<Piece> getGameBoard(){
-
             killCheck();
             return PieceList;
     }
-
+/** funkcja zwracajaca TRUE jesli miejsce jest wolne, lub FALSE jesli miejsce jest niedostepne
+ * Miejsce jest niedostepne, jesli stoi na nim inny pionek, badz postawienie na nim pionka bedzie wiazalo sie z samobojstwem*/
     private boolean checkFree(int x, int y){
         Piece piece2;
         int counter=0;
@@ -160,7 +160,7 @@ public class VirtualBoard{
                 return false;}
                         if (neighbourPieces(piece, piece2)) {
                             if (piece.getColor() != piece2.getColor()) {
-                               counter++;
+                               counter++; //za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
                             }
                         }
                     }
@@ -171,54 +171,62 @@ public class VirtualBoard{
     }
 
 
-
+/** Sprawdzamy co na calej planszy ma 0 zyc i usuwamy z tego, po usunieciu przywracamy oddech tym obok niego(no bo znikł ten co zabierał)*/
     public void killCheck() {
         List<Piece> toRemove = new ArrayList<Piece>();
         for (Piece piece : PieceList) {
             if (piece.getBreath() == 0) {
-                if(ChainList.size()>0){
-                for(PiecesChain chain : ChainList){
-                    if(!chain.getChain().contains(piece)){
-                          toRemove.add(piece);}}}
-                else{
-                    toRemove.add(piece);
+                if (ChainList.size() > 0) {
+                    for (PiecesChain chain : ChainList) {
+                        if (!chain.getChain().contains(piece)) {
+                            toRemove.add(piece);
+                        }
                     }
+                } else {
+                    toRemove.add(piece);
+                }
             }
         }
-        for(Piece piece : PieceList) {
+        for (Piece piece : PieceList) {
             for (Piece piece1 : toRemove) {
                 if (neighbourPieces(piece, piece1)) {
                     if (piece.getColor() != piece1.getColor()) {
-                        piece.setBreath(piece.getBreath()+1);
+                        piece.setBreath(piece.getBreath() + 1);
                     }
 
 
-                }}}
-                PieceList.removeAll(toRemove);
-
+                }
+            }
         }
+        PieceList.removeAll(toRemove);
+
+
+    }
+    /** Bardzo wazna i rozbudowana funkcja, okreslajace zachowanie pionka kiedy stoi obok innego pionka
+     * Jesli znajdzie sie obok pionka innego koloru, zabiera obu oddech, a jesli stoi obok tego samego koloru
+     * dodaje go do lancucha*/
     private void breathCheck(Piece piece1){
             for (Piece piece2 : PieceList){
                 if(neighbourPieces(piece1,piece2)){
-                if(piece1.getColor()!=piece2.getColor()){
+                if(piece1.getColor()!=piece2.getColor()){//inny kolor
                     piece2.takeBreath();
                     piece1.takeBreath();
                 }
-                else{
+                else{//ten sam kolor
                     List<PiecesChain> chains=new ArrayList<>();
-                    if(ChainList.size()>0){
-                    for(PiecesChain chain : ChainList){
+                    if(ChainList.size()>0){ //jesli jest jakis lancuch na calej planszy
+                    for(PiecesChain chain : ChainList){ //sprawdz wszystkie lancuchy, czy ktorys zawiera pionka do ktorego dostawiamy
                        if(chain.getChain().contains(piece2)){
                            chain.addPiece(piece1);
                         }
-                       else{
+                       else{ //jesli nie zawiera zaden to stworz nowy lancuch skladajacy sie z tych 2 pionkow
                            PiecesChain piecesChain= new PiecesChain();
                            piecesChain.addPiece(piece1);
                            piecesChain.addPiece(piece2);
-                           chains.add(piecesChain);
+                           ChainList.add(piecesChain);
                        }
                     }}
-                       else{
+                       else{ // jesli lista lancuchow jest pusta to dodaj do niej nowy lancuch z tych 2 pionkow
                            PiecesChain piecesChain= new PiecesChain();
                            piecesChain.addPiece(piece1);
                            piecesChain.addPiece(piece2);
