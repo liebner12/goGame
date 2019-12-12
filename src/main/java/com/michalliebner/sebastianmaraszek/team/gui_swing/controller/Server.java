@@ -1,5 +1,7 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 
+import static java.lang.Thread.sleep;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;

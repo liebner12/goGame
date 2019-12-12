@@ -1,5 +1,7 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 
+import static java.lang.Thread.sleep;
+
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.*;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Board;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Piece;
@@ -62,7 +64,6 @@ public class GoGameGuiController {
             for(int i=0; i<13; i++){
                 for(int j=0; j<13; j++){
                     if(e.getSource()==board.Buttons[i][j]){
-
                         try {
                             processInformation(i,j);
                         } catch (Exception ex) {
