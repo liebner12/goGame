@@ -1,4 +1,5 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
+import static java.awt.Color.white;
 import static java.lang.Math.abs;
 import static java.lang.Thread.sleep;
 
@@ -20,11 +21,14 @@ import java.util.concurrent.TimeUnit;
 import javafx.util.Pair;
 
 public class VirtualBoard{
-    Boolean turn=true; //turn=true oznacza ze ruszaja sie biale
+    Boolean turn=false; //turn=true oznacza ze ruszaja sie biale
     Boolean bot=true;   //czy w grze uczestniczy bot
     List<Piece> PieceList;// lista pionkow na planszy
     List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
-
+    int BlackTerritory;
+    int WhiteTerritory;
+    int WhitePrisoners;
+    int BlackPrisoners;
 
 
 
@@ -46,7 +50,8 @@ public class VirtualBoard{
 
     private void Multiplayer(int x, int y){
         if(checkFree(x,y)){
-            changeTurn();// najpierw sprawdz czy miejsce na ktorym stawiasz pionka jest wolne
+            changeTurn();
+           // najpierw sprawdz czy miejsce na ktorym stawiasz pionka jest wolne
                 if(!turn){ //jesli ma byc stawiany czarny
                     Piece black=new BlackPiece();
                     black.setX(x);
@@ -61,6 +66,7 @@ public class VirtualBoard{
                     breathCheck(black); //funkcja breathcheck
                }
              else{ //jesli ma byc stawiany bialy
+
                  Piece white=new WhitePiece();
                  white.setX(x);
                  white.setY(y);
@@ -155,6 +161,12 @@ public class VirtualBoard{
             piece2=new BlackPiece();
             piece2.setX(x);
             piece2.setY(y);
+            if(piece2.isInCorner())
+                piece2.setBreath(2);
+            else if(piece2.isOnBorder())
+                piece2.setBreath(3);
+            else
+                piece2.setBreath(4);
         }
         for(Piece piece : PieceList){
             if(piece.getX()==x && piece.getY()==y){
@@ -180,10 +192,22 @@ public class VirtualBoard{
                 if (ChainList.size() > 0) {
                     for (PiecesChain chain : ChainList) {
                         if (!chain.getChain().contains(piece)) {
+                            if(piece.getColor()==Color.black){
+                                BlackPrisoners++;
+                            }
+                            else{
+                                WhitePrisoners++;
+                            }
                             toRemove.add(piece);
                         }
                     }
                 } else {
+                    if(piece.getColor()==Color.black){
+                    BlackPrisoners++;
+                }
+                else{
+                    WhitePrisoners++;
+                }
                     toRemove.add(piece);
                 }
             }
@@ -240,21 +264,12 @@ public class VirtualBoard{
                 }
             }
 
-
-
-
-
-
-
     private void changeTurn(){
         if(this.turn){
             turn=false;
         }
         else{turn=true;}
     }
-
-
-
     public boolean neighbourPieces(Piece piece1, Piece piece2){
         if((abs(piece1.getX()-piece2.getX())==0 && abs(piece1.getY()-piece2.getY())== 1) || (
             abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
@@ -267,5 +282,26 @@ public class VirtualBoard{
     }
     public void PlayWithHuman(){
         bot=false;
+    }
+
+    public void CalculatePieces(){
+        for(Piece piece: PieceList){
+            if(piece.getColor()==white){
+                WhiteTerritory++;}
+            else {
+            BlackTerritory++;}
+        }
+    }
+
+    public void WhiteTerritory() {
+        WhiteTerritory+=WhitePrisoners;
+        for(int i=0;i<13;i++){
+            for(int j=0;j<13;j++){
+
+            }}
+    }
+
+    public void BlackTerrirtory(){
+        BlackTerritory+=BlackPrisoners;
     }
 }

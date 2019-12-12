@@ -10,12 +10,12 @@ import java.net.Socket;
 
 public class Server{
     public static void main(String[] argv) throws Exception {
-        ServerSocket s = new ServerSocket(511);
+        ServerSocket s = new ServerSocket(512);
         VirtualBoard board=new VirtualBoard();
         System.out.println("Server started");
+        board.PlayWithHuman();
         while (true) {
             Socket t = s.accept();// wait for client to connect
-            board.PlayWithHuman();
             ObjectInputStream b = new ObjectInputStream(t.getInputStream());
             TwoInt received = (TwoInt) b.readObject();
             board.addPiece(received.getX(),received.getY());

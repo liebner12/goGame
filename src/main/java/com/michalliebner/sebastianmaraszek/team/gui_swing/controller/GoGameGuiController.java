@@ -79,7 +79,7 @@ public class GoGameGuiController {
         }
     }
     public void processInformation(int x, int y) throws Exception {
-        Socket s = new Socket("localhost", 511);
+        Socket s = new Socket("localhost", 512);
         ObjectOutputStream p = new ObjectOutputStream(s.getOutputStream());
 
         TwoInt twoInt=new TwoInt(x,y);
