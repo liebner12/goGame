@@ -2,6 +2,7 @@ package com.michalliebner.sebastianmaraszek.team;
 
 import static org.junit.Assert.assertTrue;
 
+import com.michalliebner.sebastianmaraszek.team.gui_swing.controller.Server;
 import org.junit.Test;
 
 /**
@@ -9,12 +10,13 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        String[] args =null;
+        try {
+            App.main(args);
+        }
+        catch (Exception e){}
     }
 }

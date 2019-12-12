@@ -59,6 +59,8 @@ public class GoGameGuiController {
     private void addBoardButtons() {
         board.addButtons(new BoardPiecesListener());
     }
+
+
     private class BoardPiecesListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             for(int i=0; i<13; i++){
@@ -77,7 +79,7 @@ public class GoGameGuiController {
         }
     }
     public void processInformation(int x, int y) throws Exception {
-        Socket s = new Socket("localhost", 510);
+        Socket s = new Socket("localhost", 511);
         ObjectOutputStream p = new ObjectOutputStream(s.getOutputStream());
 
         TwoInt twoInt=new TwoInt(x,y);

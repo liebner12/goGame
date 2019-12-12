@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.util.Pair;
 
 public class VirtualBoard{
-    Boolean turn=false; //turn=true oznacza ze ruszaja sie biale
+    Boolean turn=true; //turn=true oznacza ze ruszaja sie biale
     Boolean bot=true;   //czy w grze uczestniczy bot
     List<Piece> PieceList;// lista pionkow na planszy
     List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
@@ -35,8 +35,8 @@ public class VirtualBoard{
 
 
     public void addPiece(int x, int y){
-            if(!bot) //jesli nie bierze udzialu bot, gramy multiplayera
-            Multiplayer(x,y);
+            if(!bot){ //jesli nie bierze udzialu bot, gramy multiplayera
+            Multiplayer(x,y);}
             else{ //jesli bierze udzial bot no to single playera
             try {
                SinglePlayer(x,y);
@@ -45,7 +45,8 @@ public class VirtualBoard{
         }}
 
     private void Multiplayer(int x, int y){
-        if(checkFree(x,y)){ // najpierw sprawdz czy miejsce na ktorym stawiasz pionka jest wolne
+        if(checkFree(x,y)){
+            changeTurn();// najpierw sprawdz czy miejsce na ktorym stawiasz pionka jest wolne
                 if(!turn){ //jesli ma byc stawiany czarny
                     Piece black=new BlackPiece();
                     black.setX(x);
@@ -223,7 +224,7 @@ public class VirtualBoard{
                            PiecesChain piecesChain= new PiecesChain();
                            piecesChain.addPiece(piece1);
                            piecesChain.addPiece(piece2);
-                           ChainList.add(piecesChain);
+                           chains.add(piecesChain);
                        }
                     }}
                        else{ // jesli lista lancuchow jest pusta to dodaj do niej nowy lancuch z tych 2 pionkow
@@ -260,4 +261,11 @@ public class VirtualBoard{
             return true;
         }
         return false;
-    }}
+    }
+    public void PlayWithBot(){
+        bot=true;
+    }
+    public void PlayWithHuman(){
+        bot=false;
+    }
+}
