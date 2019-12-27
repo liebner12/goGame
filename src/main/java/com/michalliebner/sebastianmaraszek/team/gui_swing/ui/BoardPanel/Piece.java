@@ -5,16 +5,17 @@ import java.awt.Color;
 public interface Piece {
     int getX();
     int getY();
-    int getBreath();
+    int getBreathNumber();
+    boolean[][] getBreathPosition();
     void setX(int x);
     void setY(int y);
     boolean isInCorner();
     boolean isInCentre();
     boolean isOnBorder();
-    void takeBreath();
+    void takeBreath(int x,int y);
 
     int getSize();
-    void setBreath(int x);
+    void setBreathNumber(int x);
     Color getColor();
     void setColor(Color c);
     void setSize(int i);

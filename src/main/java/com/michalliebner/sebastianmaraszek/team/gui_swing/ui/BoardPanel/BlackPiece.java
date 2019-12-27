@@ -1,17 +1,21 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
+import com.michalliebner.sebastianmaraszek.team.gui_swing.controller.TwoInt;
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlackPiece implements Piece, Serializable {
     private int size=50;
+    private boolean[][] BreathPosition;
     private Color color=Color.BLACK;
     private int posX;
     private int posY;
     private int breath=4;
 
     public BlackPiece(){
-
+        BreathPosition=new boolean[13][13];
     }
 
     @Override
@@ -25,12 +29,12 @@ public class BlackPiece implements Piece, Serializable {
     }
 
     @Override
-    public int getBreath() {
+    public int getBreathNumber() {
         return breath;
     }
 
     @Override
-    public  void setBreath(int x) {
+    public  void setBreathNumber(int x) {
         this.breath=x;
     }
 
@@ -43,6 +47,11 @@ public class BlackPiece implements Piece, Serializable {
     public void setY(int y) {
         posY=y;
 
+    }
+
+    @Override
+    public boolean[][] getBreathPosition(){
+        return BreathPosition;
     }
 
     @Override
@@ -73,7 +82,8 @@ public class BlackPiece implements Piece, Serializable {
     }
 
     @Override
-    public void takeBreath() {
+    public void takeBreath(int x, int y) {
+        BreathPosition[x][y]=true;
         this.breath=this.breath-1;
     }
 

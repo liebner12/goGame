@@ -10,11 +10,13 @@ public class ExitIconTest {
 
     @Test
     public void getIconWidth() {
+
         assertEquals(e.getIconWidth(),32);
     }
 
     @Test
     public void getIconHeight() {
+
         assertEquals(e.getIconHeight(),32);
     }
 }

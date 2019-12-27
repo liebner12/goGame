@@ -25,11 +25,17 @@ public class VirtualBoard{
     Boolean bot=true;   //czy w grze uczestniczy bot
     List<Piece> PieceList;// lista pionkow na planszy
     List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
+
+    TwoInt ko;
+    TwoInt ko2;
+
+    Piece LastPiece;
+
     int BlackTerritory;
     int WhiteTerritory;
+
     int WhitePrisoners;
     int BlackPrisoners;
-
 
 
         public VirtualBoard() {
@@ -57,25 +63,25 @@ public class VirtualBoard{
                     black.setX(x);
                     black.setY(y);
                  if(black.isInCorner())
-                     black.setBreath(2);
+                     black.setBreathNumber(2);
                  else if(black.isOnBorder())
-                     black.setBreath(3);
+                     black.setBreathNumber(3);
                  else
-                     black.setBreath(4); // ustaw liczbe oddechow w zaleznosci od tego gdzie dany pionek sie znajduje
-                    PieceList.add(black);
-                    breathCheck(black); //funkcja breathcheck
+                     black.setBreathNumber(4); // ustaw liczbe oddechow w zaleznosci od tego gdzie dany pionek sie znajduje
+                     PieceList.add(black);
+                     breathCheck(black); //funkcja breathcheck
                }
-             else{ //jesli ma byc stawiany bialy
 
+             else{ //jesli ma byc stawiany bialy
                  Piece white=new WhitePiece();
                  white.setX(x);
                  white.setY(y);
                 if(white.isInCorner())
-                    white.setBreath(2);
+                    white.setBreathNumber(2);
                 else if(white.isOnBorder())
-                    white.setBreath(3);
+                    white.setBreathNumber(3);
                 else
-                    white.setBreath(4);
+                    white.setBreathNumber(4);
                     PieceList.add(white);
                     breathCheck(white);}
              }
@@ -90,11 +96,11 @@ public class VirtualBoard{
          black.setX(x);
          black.setY(y);
          if (black.isInCorner())
-             black.setBreath(2);
+             black.setBreathNumber(2);
          else if (black.isOnBorder())
-             black.setBreath(3);
+             black.setBreathNumber(3);
          else
-             black.setBreath(4);
+             black.setBreathNumber(4);
              PieceList.add(black);
              breathCheck(black);}}
         else{           //ruch bota
@@ -128,69 +134,86 @@ public class VirtualBoard{
                 white=firstchoice.get(choice);}}
 
             if (white.isInCorner())
-                white.setBreath(2);
+                white.setBreathNumber(2);
             else if (white.isOnBorder())
-                  white.setBreath(3);
+                  white.setBreathNumber(3);
             else
-                white.setBreath(4);
+                white.setBreathNumber(4);
                 PieceList.add(white);
                 breathCheck(white);}}
 
                 /**  zwracanie listy pionkow i ich pozycji*/
     public List<Piece> getGameBoard(){
             killCheck();
+            chainKillCheck();
             return PieceList;
     }
 /** funkcja zwracajaca TRUE jesli miejsce jest wolne, lub FALSE jesli miejsce jest niedostepne
  * Miejsce jest niedostepne, jesli stoi na nim inny pionek, badz postawienie na nim pionka bedzie wiazalo sie z samobojstwem*/
-    private boolean checkFree(int x, int y){
+    private boolean checkFree(int x, int y) {
         Piece piece2;
-        int counter=0;
-        if(!turn){
-            piece2=new WhitePiece();
+        int counter = 0;
+        if (!turn) {
+            piece2 = new WhitePiece();
             piece2.setX(x);
             piece2.setY(y);
-            if(piece2.isInCorner())
-                piece2.setBreath(2);
-            else if(piece2.isOnBorder())
-                piece2.setBreath(3);
+            if (piece2.isInCorner())
+                piece2.setBreathNumber(2);
+            else if (piece2.isOnBorder())
+                piece2.setBreathNumber(3);
             else
-                piece2.setBreath(4);
-        }
-        else {
-            piece2=new BlackPiece();
+                piece2.setBreathNumber(4);
+        } else {
+            piece2 = new BlackPiece();
             piece2.setX(x);
             piece2.setY(y);
-            if(piece2.isInCorner())
-                piece2.setBreath(2);
-            else if(piece2.isOnBorder())
-                piece2.setBreath(3);
+            if (piece2.isInCorner())
+                piece2.setBreathNumber(2);
+            else if (piece2.isOnBorder())
+                piece2.setBreathNumber(3);
             else
-                piece2.setBreath(4);
+                piece2.setBreathNumber(4);
         }
-        for(Piece piece : PieceList){
-            if(piece.getX()==x && piece.getY()==y){
+        for (Piece piece : PieceList) {
+            if (piece.getX() == x && piece.getY() == y) {
+                return false;
+            }
+            if (neighbourPieces(piece, piece2)) {
+                if (piece.getColor() != piece2.getColor()) {
+                    counter++; //za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
+                }
+            }
+        }
+        if(counter == piece2.getBreathNumber()) {
+            if (LastPiece != null && neighbourPieces(LastPiece, piece2) && LastPiece.getColor() != piece2.getColor()){
                 return false;}
-                        if (neighbourPieces(piece, piece2)) {
-                            if (piece.getColor() != piece2.getColor()) {
-                               counter++; //za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
-                            }
-                        }
-                    }
-        if(counter==piece2.getBreath()){
-            return false;
+            else{
+                LastPiece = piece2;
+            }
         }
-        return true;
+            return true;
+
     }
 
 
+    public void chainKillCheck(){
+        for (PiecesChain pieceChain : ChainList) {
+                //System.out.println(pieceChain.BreathNumber());
+                //System.out.println(pieceChain.koleszka+ "koleszkow");
+                //System.out.println(pieceChain.wspulnywruk+ "wspolnych wroguw");
+            }
+    }
 /** Sprawdzamy co na calej planszy ma 0 zyc i usuwamy z tego, po usunieciu przywracamy oddech tym obok niego(no bo znikł ten co zabierał)*/
-    public void killCheck() {
+    public void killCheck(){
         List<Piece> toRemove = new ArrayList<Piece>();
         for (Piece piece : PieceList) {
-            if (piece.getBreath() == 0) {
+            if (piece.getBreathNumber() == 0) {
+                if(LastPiece!=null && piece.getX()==LastPiece.getX() && piece.getY()==LastPiece.getY()){
+                    LastPiece.setBreathNumber(0);
+                    piece=LastPiece;
+                }
                 if (ChainList.size() > 0) {
-                    for (PiecesChain chain : ChainList) {
+                    for (PiecesChain chain : ChainList){
                         if (!chain.getChain().contains(piece)) {
                             if(piece.getColor()==Color.black){
                                 BlackPrisoners++;
@@ -202,6 +225,9 @@ public class VirtualBoard{
                         }
                     }
                 } else {
+                    if(LastPiece!=null && neighbourPieces(LastPiece,piece)){
+                        toRemove.remove(LastPiece);
+                    }
                     if(piece.getColor()==Color.black){
                     BlackPrisoners++;
                 }
@@ -215,8 +241,8 @@ public class VirtualBoard{
         for (Piece piece : PieceList) {
             for (Piece piece1 : toRemove) {
                 if (neighbourPieces(piece, piece1)) {
-                    if (piece.getColor() != piece1.getColor()) {
-                        piece.setBreath(piece.getBreath() + 1);
+                    if (piece.getColor() != piece1.getColor()){
+                        piece.setBreathNumber(piece.getBreathNumber() + 1);
                     }
 
 
@@ -232,30 +258,31 @@ public class VirtualBoard{
      * dodaje go do lancucha*/
     private void breathCheck(Piece piece1){
             for (Piece piece2 : PieceList){
-                if(neighbourPieces(piece1,piece2)){
-                if(piece1.getColor()!=piece2.getColor()){//inny kolor
-                    piece2.takeBreath();
-                    piece1.takeBreath();
-                }
+                        if(neighbourPieces(piece1,piece2)){
+                            if(piece1.getColor()!=piece2.getColor()){//inny kolor
+                                piece2.takeBreath(piece1.getX(),piece1.getY());
+                                piece1.takeBreath(piece2.getX(),piece2.getY());
+                            }
                 else{//ten sam kolor
                     List<PiecesChain> chains=new ArrayList<>();
+                    Boolean contains=false;
                     if(ChainList.size()>0){ //jesli jest jakis lancuch na calej planszy
-                    for(PiecesChain chain : ChainList){ //sprawdz wszystkie lancuchy, czy ktorys zawiera pionka do ktorego dostawiamy
-                       if(chain.getChain().contains(piece2)){
-                           chain.addPiece(piece1);
-                        }
-                       else{ //jesli nie zawiera zaden to stworz nowy lancuch skladajacy sie z tych 2 pionkow
+                        int k=ChainList.size();
+                        for(int i =0 ; i<k; i++){ //sprawdz wszystkie lancuchy, czy ktorys zawiera pionka do ktorego dostawiamy
+                            if(ChainList.get(i).getChain().contains(piece2)){
+                                ChainList.get(i).addPiece(piece1);
+                                contains=true;
+                        }}
+                       if (!contains){ //jesli nie zawiera zaden to stworz nowy lancuch skladajacy sie z tych 2 pionkow
                            PiecesChain piecesChain= new PiecesChain();
                            piecesChain.addPiece(piece1);
                            piecesChain.addPiece(piece2);
-                           chains.add(piecesChain);
-                       }
+                           ChainList.add(piecesChain);
                     }}
                        else{ // jesli lista lancuchow jest pusta to dodaj do niej nowy lancuch z tych 2 pionkow
                            PiecesChain piecesChain= new PiecesChain();
                            piecesChain.addPiece(piece1);
                            piecesChain.addPiece(piece2);
-                           System.out.println(piecesChain.getBreaths());
                            ChainList.add(piecesChain);
                        }
 
@@ -294,6 +321,7 @@ public class VirtualBoard{
     }
 
     public void WhiteTerritory() {
+        CalculatePieces();
         WhiteTerritory+=WhitePrisoners;
         for(int i=0;i<13;i++){
             for(int j=0;j<13;j++){
