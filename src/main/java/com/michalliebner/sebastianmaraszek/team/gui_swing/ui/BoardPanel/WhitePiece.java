@@ -26,6 +26,17 @@ public class WhitePiece implements Piece, Serializable {
     }
 
     @Override
+    public void fullBreathNumber(){
+        if(isInCorner())
+            setBreathNumber(2);
+        else if(isOnBorder())
+            setBreathNumber(3);
+        else
+            setBreathNumber(4); //
+    }
+
+
+    @Override
     public int getBreathNumber() {
         return breath;
     }

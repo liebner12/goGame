@@ -34,6 +34,16 @@ public class BlackPiece implements Piece, Serializable {
     }
 
     @Override
+    public void fullBreathNumber(){
+        if(isInCorner())
+            setBreathNumber(2);
+        else if(isOnBorder())
+            setBreathNumber(3);
+        else
+            setBreathNumber(4); //
+    }
+
+    @Override
     public  void setBreathNumber(int x) {
         this.breath=x;
     }
@@ -68,7 +78,6 @@ public class BlackPiece implements Piece, Serializable {
             return true;
         }
         return false;
-
     }
 
     @Override

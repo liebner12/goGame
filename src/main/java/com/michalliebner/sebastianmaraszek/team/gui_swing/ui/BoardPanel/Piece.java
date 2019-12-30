@@ -7,6 +7,7 @@ public interface Piece {
     int getY();
     int getBreathNumber();
     boolean[][] getBreathPosition();
+    void fullBreathNumber();
     void setX(int x);
     void setY(int y);
     boolean isInCorner();
