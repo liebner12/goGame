@@ -16,9 +16,7 @@ public class PiecesChain {
     private int breaths;
     private boolean[][] BreathsPosition=new boolean[13][13];
 
-    public PiecesChain(){
-
-    }
+    public PiecesChain(){}
 
     public void setBreathsPosition(){
         for(int i=0; i<13;i++){
@@ -77,6 +75,9 @@ public class PiecesChain {
         pieces.add(piece);
         BreathCounter();
 
+    }
+    public void clearChain(){
+        pieces.clear();
     }
 
     public void BreathCounter(){

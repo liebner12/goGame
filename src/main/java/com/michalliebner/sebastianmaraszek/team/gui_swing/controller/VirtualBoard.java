@@ -105,7 +105,7 @@ public class VirtualBoard{
  * Miejsce jest niedostepne, jesli stoi na nim inny pionek, badz postawienie na nim pionka bedzie wiazalo sie z samobojstwem*/
 private boolean checkFree(int x, int y){
     Piece piece2;
-
+    boolean possiblekill=false;
     if(!turn){
         piece2=new WhitePiece();
         piece2.setX(x);
@@ -122,18 +122,24 @@ private boolean checkFree(int x, int y){
     for(Piece piece : PieceList){
         if(piece.getX()==x && piece.getY()==y){
             return false;}
-        else if (neighbourPieces(piece, piece2)) {
+        else if (neighbourPieces(piece, piece2)){
             if (piece.getColor() != piece2.getColor()) {
+                    if(piece.getBreathNumber()==1){
+                        possiblekill=true;
+                    }
                     piece2.setBreathNumber(piece2.getBreathNumber()-1);//za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
             }
         }}
         if(piece2.getBreathNumber()<=0){
+            if(!possiblekill){
+                return false;
+            }
+
             if (LastPiece != null && neighbourPieces(LastPiece, piece2) && LastPiece.getColor() != piece2.getColor()){
                 return false;}
             else{
                 LastPiece = piece2;
             }}
-
     return true;
 }
 
@@ -202,18 +208,24 @@ private boolean checkFree(int x, int y){
 
     private void breathCheck(Piece piece1){
         if(piece1.getColor()==BLACK){
+                    BlackPlayer.CheckAndAddToChain(piece1);
+                    BlackPlayer.scanForJoins();
+
             for (Piece piece2 : WhitePlayer.PieceList){
                         if(neighbourPieces(piece1,piece2)){//inny kolor
                                 piece2.takeBreath(piece1.getX(),piece1.getY());
-                                piece1.takeBreath(piece2.getX(),piece2.getY());
-                            }}}
+                                piece1.takeBreath(piece2.getX(),piece2.getY());}}}
         else {
+            WhitePlayer.CheckAndAddToChain(piece1);
+            WhitePlayer.scanForJoins();
             for (Piece piece2 : BlackPlayer.PieceList){
                 if(neighbourPieces(piece1,piece2)){//inny kolor
                     piece2.takeBreath(piece1.getX(),piece1.getY());
                     piece1.takeBreath(piece2.getX(),piece2.getY());
-        }}
-    }}
+        }
+            }
+    }
+    }
 
 
     private void changeTurn(){
