@@ -28,6 +28,7 @@ public class VirtualBoard{
     Player BlackPlayer;
     Player WhitePlayer;
     Boolean turn=true;
+
     List<Piece> PieceList;// lista pionkow na planszy
     List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
 
@@ -75,6 +76,11 @@ public class VirtualBoard{
         }
     }
 
+    public void resetKO(Color color){
+            if(LastPiece!=null){
+            if(LastPiece.getColor()!=color)
+                LastPiece=null;}
+    }
 
  public void SinglePlayer(int x, int y){
          if(turn){//ruch uzytkownika taki sam jak w multiplayerze
@@ -101,7 +107,6 @@ private boolean checkFree(int x, int y){
     Piece piece2;
 
     if(!turn){
-
         piece2=new WhitePiece();
         piece2.setX(x);
         piece2.setY(y);
@@ -123,8 +128,11 @@ private boolean checkFree(int x, int y){
             }
         }}
         if(piece2.getBreathNumber()<=0){
-            System.out.println("HALO JESTEM TU");
-            return false;}
+            if (LastPiece != null && neighbourPieces(LastPiece, piece2) && LastPiece.getColor() != piece2.getColor()){
+                return false;}
+            else{
+                LastPiece = piece2;
+            }}
 
     return true;
 }
@@ -144,7 +152,8 @@ private boolean checkFree(int x, int y){
             if (piece.getBreathNumber() == 0) {
                 if(LastPiece!=null && piece.getX()==LastPiece.getX() && piece.getY()==LastPiece.getY()){
                     LastPiece.setBreathNumber(0);
-                    piece=LastPiece;}
+                    piece=LastPiece;
+                }
 
                 if (ChainList.size() > 0) {
                     for (PiecesChain chain : ChainList){
@@ -225,6 +234,7 @@ private boolean checkFree(int x, int y){
         WhitePlayer.isBot=false;
     }
     public void PlayBlackPiece(int x, int y){
+        resetKO(black);
         Piece black=new BlackPiece();
         black.setX(x);
         black.setY(y);
@@ -234,7 +244,7 @@ private boolean checkFree(int x, int y){
         setPieceList();
     }
     public void PlayWhitePiece(int x, int y){
-
+        resetKO(white);
         Piece white=new WhitePiece();
         white.setX(x);
         white.setY(y);
