@@ -29,7 +29,7 @@ public class VirtualBoard{
     Player BlackPlayer;
     Player WhitePlayer;
     Boolean turn=true;
-
+    Piece immortal;
     List<Piece> PieceList;// lista pionkow na planszy
     List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
 
@@ -119,6 +119,9 @@ private boolean checkFree(int x, int y){
         piece2.fullBreathNumber();
     }
 
+    if(KamikazePiece(piece2)){
+        return true;
+    }
     if(!SuicideChain(piece2)){
         return false;
     }
@@ -129,6 +132,7 @@ private boolean checkFree(int x, int y){
             if (piece.getColor() != piece2.getColor()) {
                     if(piece.getBreathNumber()==1){
                         possiblekill=true;
+                        immortal=piece2;
                     }
                     piece2.setBreathNumber(piece2.getBreathNumber()-1);//za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
             }
@@ -146,6 +150,32 @@ private boolean checkFree(int x, int y){
             }}
     return true;
 }
+    public boolean KamikazePiece(Piece piece){
+        Color color=piece.getColor();
+        if(color==white){
+            for(PiecesChain chain : BlackPlayer.ChainList){
+                if(chain.BreathsNumber()==1){
+                    for(Piece piece1 : chain.getChain()){
+                        if(neighbourPieces(piece1,piece)){
+                            immortal=piece;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for(PiecesChain chain : WhitePlayer.ChainList){
+                if(chain.BreathsNumber()==1){
+                    for(Piece piece1 : chain.getChain()){
+                        if(neighbourPieces(piece1,piece)){
+                            immortal=piece;
+                            return true;
+                        }
+                    }
+                }}}
+        return false;
+    }
 
     public boolean SuicideChain(Piece piece){
         Color color=piece.getColor();
@@ -184,13 +214,16 @@ private boolean checkFree(int x, int y){
         List <Piece> toIngonre = new ArrayList<Piece>();
         List<Piece> toRemove = new ArrayList<Piece>();
         for(Piece piece : PieceList){
+            if(immortal!=null && immortal.getY()==piece.getY() && immortal.getX()==piece.getX()){
+                toIngonre.add(piece);
+                immortal=null;
+            }
             if(BlackPlayer.ChainContainsPiece(piece) || WhitePlayer.ChainContainsPiece(piece)){
                 toIngonre.add(piece);
             }
         }
-
         for (Piece piece : PieceList) {
-            if (piece.getBreathNumber() == 0 && !toIngonre.contains(piece)) {
+           if (piece.getBreathNumber() == 0 && !toIngonre.contains(piece)) {
                 if(LastPiece!=null && piece.getX()==LastPiece.getX() && piece.getY()==LastPiece.getY()){
                     LastPiece.setBreathNumber(0);
                     piece=LastPiece;
@@ -225,8 +258,6 @@ private boolean checkFree(int x, int y){
                     if (piece.getColor() != piece1.getColor()){
                         piece.setBreathNumber(piece.getBreathNumber() + 1);
                     }
-
-
                 }
             }
         }
