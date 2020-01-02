@@ -113,13 +113,15 @@ private boolean checkFree(int x, int y){
         piece2.setY(y);
         piece2.fullBreathNumber();}
     else {
-
         piece2 = new BlackPiece();
         piece2.setX(x);
         piece2.setY(y);
         piece2.fullBreathNumber();
     }
 
+    if(!SuicideChain(piece2)){
+        return false;
+    }
     for(Piece piece : PieceList){
         if(piece.getX()==x && piece.getY()==y){
             return false;}
@@ -131,6 +133,7 @@ private boolean checkFree(int x, int y){
                     piece2.setBreathNumber(piece2.getBreathNumber()-1);//za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
             }
         }}
+
         if(piece2.getBreathNumber()<=0){
             if(!possiblekill){
                 return false;
@@ -144,6 +147,30 @@ private boolean checkFree(int x, int y){
     return true;
 }
 
+    public boolean SuicideChain(Piece piece){
+        Color color=piece.getColor();
+        if(color==black){
+            for(PiecesChain chain : BlackPlayer.ChainList){
+                if(chain.BreathsNumber()==1){
+                    for(Piece piece1 : chain.getChain()){
+                        if(neighbourPieces(piece1,piece)){
+                            return false;
+                        }
+                    }
+                    }
+                }
+            }
+        else {
+            for(PiecesChain chain : WhitePlayer.ChainList){
+                if(chain.BreathsNumber()==1){
+                    for(Piece piece1 : chain.getChain()){
+                        if(neighbourPieces(piece1,piece)){
+                            return false;
+                        }
+                    }
+        }}}
+        return true;
+        }
 
     public void chainKillCheck(){
         for (PiecesChain pieceChain : ChainList) {
