@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -153,27 +154,31 @@ private boolean checkFree(int x, int y){
     }
 /** Sprawdzamy co na calej planszy ma 0 zyc i usuwamy z tego, po usunieciu przywracamy oddech tym obok niego(no bo znikł ten co zabierał)*/
     public void killCheck(){
+        List <Piece> toIngonre = new ArrayList<Piece>();
         List<Piece> toRemove = new ArrayList<Piece>();
+        for(Piece piece : PieceList){
+            if(BlackPlayer.ChainContainsPiece(piece) || WhitePlayer.ChainContainsPiece(piece)){
+                toIngonre.add(piece);
+            }
+        }
+
         for (Piece piece : PieceList) {
-            if (piece.getBreathNumber() == 0) {
+            if (piece.getBreathNumber() == 0 && !toIngonre.contains(piece)) {
                 if(LastPiece!=null && piece.getX()==LastPiece.getX() && piece.getY()==LastPiece.getY()){
                     LastPiece.setBreathNumber(0);
                     piece=LastPiece;
                 }
-
-                if (ChainList.size() > 0) {
-                    for (PiecesChain chain : ChainList){
-                        if (!chain.getChain().contains(piece)) {
+                    if (!BlackPlayer.ChainContainsPiece(piece) && !WhitePlayer.ChainContainsPiece(piece)) {
                             if(piece.getColor()==Color.black){
                                 BlackPlayer.addPrisoner();
                             }
                             else{
                                 WhitePlayer.addPrisoner();
                             }
-                            toRemove.add(piece);
-                        }
-                    }
-                } else {
+                            toRemove.add(piece);}
+
+                 else {
+
                     if(LastPiece!=null && neighbourPieces(LastPiece,piece)){
                         toRemove.remove(LastPiece);
                     }
@@ -210,11 +215,11 @@ private boolean checkFree(int x, int y){
         if(piece1.getColor()==BLACK){
                     BlackPlayer.CheckAndAddToChain(piece1);
                     BlackPlayer.scanForJoins();
-
             for (Piece piece2 : WhitePlayer.PieceList){
                         if(neighbourPieces(piece1,piece2)){//inny kolor
                                 piece2.takeBreath(piece1.getX(),piece1.getY());
-                                piece1.takeBreath(piece2.getX(),piece2.getY());}}}
+                                piece1.takeBreath(piece2.getX(),piece2.getY());}}
+        handleChains(black);}
         else {
             WhitePlayer.CheckAndAddToChain(piece1);
             WhitePlayer.scanForJoins();
@@ -224,8 +229,57 @@ private boolean checkFree(int x, int y){
                     piece1.takeBreath(piece2.getX(),piece2.getY());
         }
             }
+    handleChains(white);
+        }
     }
+    private void handleChains(Color color){
+        List <PiecesChain> chainsToRemove=new ArrayList<>();
+        if(color==BLACK)
+        {
+            for(PiecesChain chain : BlackPlayer.ChainList){
+                System.out.println(chain.BreathsNumber());
+                if(chain.BreathsNumber()==0){
+                    chainsToRemove.add(chain);
+                }
+            }
+        }
+        else{
+            for(PiecesChain chain : WhitePlayer.ChainList){
+                System.out.println(chain.BreathsNumber());
+                if(chain.BreathsNumber()==0){
+                    chainsToRemove.add(chain);
+                }
+        }
     }
+
+        Iterator<PiecesChain> it = chainsToRemove.iterator();
+        while (it.hasNext()) {
+            removeChain(it.next());
+        }
+    }
+
+    private void removeChain(PiecesChain chain){
+        Color color=chain.getColor();
+        List<Piece> toRemove = new ArrayList<Piece>();
+        for(Piece piece : chain.getChain()){
+            for(Piece piece1 : PieceList){
+                toRemove.add(piece);
+                if(neighbourPieces(piece1,piece)){
+                if(piece1.getColor()!=color){
+                    piece1.setBreathNumber(piece1.getBreathNumber()+1);
+                }
+            }
+            }
+        }
+    if(color==BLACK){
+        BlackPlayer.ChainList.remove(chain);
+    }
+    else{
+        WhitePlayer.ChainList.remove(chain);
+    }
+    PieceList.removeAll(toRemove);
+    }
+
 
 
     private void changeTurn(){

@@ -11,86 +11,75 @@ import java.util.Set;
 public class PiecesChain {
     private List<Piece> pieces=new ArrayList<Piece>();
     private Color color;
-    public int koleszka;
-    public int wspulnywruk;
-    private int breaths;
+    private int breaths,enemies;
     private boolean[][] BreathsPosition=new boolean[13][13];
 
     public PiecesChain(){}
 
-    public void setBreathsPosition(){
+    public void setEnemiesPosition(){
+        enemies=0;
         for(int i=0; i<13;i++){
             for(int j=0; j<13;j++){
         for(Piece piece: pieces){
             if(piece.getBreathPosition()[i][j]){
                 BreathsPosition[i][j]=true;
+                enemies++;
             }
         }}}
-        wspulnywruk=0;
-        for(Piece piece: pieces) {
+        for(Piece piece: pieces){
             if (BreathsPosition[piece.getX()][piece.getY()]){
                 BreathsPosition[piece.getX()][piece.getY()] = false;
-                wspulnywruk++;
+                enemies--;
             }
         }
     }
 
-    public void neighbourhood(){
-        koleszka=0;
-        for(Piece piece1: pieces) {
-            for(Piece piece2: pieces) {
-                    if(neighbourPieces(piece1,piece2)){
-                        koleszka++;
-                    }
-            }}
-            koleszka=(int)koleszka/2;
+    public void correctBreathNumber(Piece piece){
+        for (Piece piece2 : pieces){
+            if(neighbourPieces(piece,piece2)){//inny kolor
+                piece2.takeBreath(piece.getX(),piece2.getY());
+                piece.takeBreath(piece2.getX(),piece2.getY());}}
+    }
+
+    public void setBreaths(){
+        breaths=0;
+        setEnemiesPosition();
+        for(Piece piece : pieces){
+            breaths+=piece.getBreathNumber();
         }
+    }
 
-        public int countBreath(){
-        setBreathsPosition();
-        int counter=0;
-        for(int i=0; i<13; i++){
-            for(int j=0; j<13 ; j++){
-                if(BreathsPosition[i][j]){
-                    counter++;
-                }
-            }
-        }
+    public int EnemiesNumber(){
+        setEnemiesPosition();
+        return enemies;
 
-    return counter;}
-
-
-
-    public int BreathNumber(){
-        setBreathsPosition();
-        BreathCounter();
-        neighbourhood();
+    }
+    public int BreathsNumber(){
+        setBreaths();
         return breaths;
-
-    }    public List<Piece> getChain(){
+    }
+    public List<Piece> getChain(){
         return pieces;
     }
 
     public void addPiece(Piece piece){
+        correctBreathNumber(piece);
         pieces.add(piece);
-        BreathCounter();
+        color=piece.getColor();
 
     }
     public void clearChain(){
         pieces.clear();
     }
-
-    public void BreathCounter(){
-        breaths=0;
-        for(Piece piece: pieces){
-            breaths+=piece.getBreathNumber();
-        }
+    public Color getColor(){
+        return color;
     }
-            private boolean neighbourPieces(Piece piece1, Piece piece2){
-                if((abs(piece1.getX()-piece2.getX())==0 && abs(piece1.getY()-piece2.getY())== 1) || (
-                    abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
-                    return true;
-                }
-                return false;
+
+    private boolean neighbourPieces(Piece piece1, Piece piece2){
+        if((abs(piece1.getX()-piece2.getX())==0 && abs(piece1.getY()-piece2.getY())== 1) || (
+            abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
+            return true;
+        }
+        return false;
             }
         }

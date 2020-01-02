@@ -54,7 +54,7 @@ public class Player {
     }
         tempToAdd.getChain().addAll(tempToDelete.getChain());
         ChainList.remove(tempToDelete);
-        System.out.println(color+" "+ChainList.size());
+    //    System.out.println(color+" "+ChainList.size());
     }
 
     public PiecesChain IsInChain(Piece piece){
@@ -69,6 +69,14 @@ public class Player {
         return newChain;
     }
 
+    public boolean ChainContainsPiece(Piece piece){
+        for(PiecesChain chain : ChainList){
+            if(chain.getChain().contains(piece)){
+                return true;
+
+            }        }
+    return false;
+    }
     public Color getColor(){
         return color;
     }
