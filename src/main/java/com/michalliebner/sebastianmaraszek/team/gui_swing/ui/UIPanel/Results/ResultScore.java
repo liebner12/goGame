@@ -34,7 +34,6 @@ public class ResultScore extends JTextField {
         g2d.setRenderingHints(qualityHints);
         g2d.setColor(new Color(45, 45, 45));
         g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-
     }
 
 }

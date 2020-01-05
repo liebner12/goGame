@@ -17,7 +17,7 @@ public class OfflineButton extends JButton {
         setBorderPainted(false);
         setContentAreaFilled(false);
         setBounds(212, 100, WIDTH, HEIGHT);
-        setText("Offline");
+        setText("Single player");
     }
 
     @Override
@@ -37,10 +37,5 @@ public class OfflineButton extends JButton {
         g2.dispose();
         super.paintComponent(g);
     }
-    public static class StartButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            StartFrame startFrame = new StartFrame();
-            startFrame.setVisible(true);
-        }
-    }
+
 }

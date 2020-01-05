@@ -1,19 +1,13 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
-
-import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.StartFrame;
-import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.Results.Results;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class UI extends JPanel {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 700;
-    private JLabel graWGo;
     private SurrenderButton surrenderButton;
-    private Results results;
     private StartButton startButton;
+    private PassButton passButton;
     public UI(){
         setLayout(null);
         setBounds(770,30,WIDTH,HEIGHT);
@@ -28,24 +22,22 @@ public class UI extends JPanel {
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, WIDTH, HEIGHT);
     }
-    public void initUI() throws IOException {
-        graWGo = new JLabel("JDGO");
-        graWGo.setBackground(new Color(60, 58, 60));
-        graWGo.setBounds(140,35,200,32);
-        graWGo.setFont(new Font("Arial", Font.BOLD, 40));
-        graWGo.setForeground(new Color(245, 245, 249));
-        results = new Results();
+    public void initUI(){
+        passButton = new PassButton();
         startButton = new StartButton();
         surrenderButton = new SurrenderButton();
-        add(graWGo);
-        add(results);
+        add(passButton);
         add(surrenderButton);
         add(startButton);
     }
-
-    public void initListeners() {
-        startButton.addActionListener(new StartButton.StartButtonListener());
+    public StartButton getStartButton(){
+        return startButton;
     }
-
+    public SurrenderButton getSurrenderButton(){
+        return surrenderButton;
+    }
+    public PassButton getPassButton(){
+        return passButton;
+    }
 
 }

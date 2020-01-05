@@ -1,9 +1,8 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
-
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Board;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.Results.Results;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.UI;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
-
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class GoGameGui extends JFrame {
     private UI UI;
     private Window window;
     private Container container = getContentPane();
-
+    private Results results;
     public GoGameGui() throws IOException {
         setLayout(null);
         setTitle("GoGame");
@@ -37,16 +36,23 @@ public class GoGameGui extends JFrame {
     public Window getWindow(){
         return window;
     }
-
+    public Results getResults(){
+        return results;
+    }
     private Container components() throws IOException {
+        results = new Results();
+        results.initResults();
         window = new Window();
         window.initWindow();
         Board = new Board();
         UI = new UI();
         UI.initUI();
+
+        add(results);
         add(UI);
         add(Board);
         add(window);
+
         return container;
     }
 }

@@ -21,10 +21,7 @@ public class ServerTest {
 
 
         String[] args = null;
-        try {
-            Server.main(args);
-        }
-        catch (Exception e){}
+
 
     }
 }

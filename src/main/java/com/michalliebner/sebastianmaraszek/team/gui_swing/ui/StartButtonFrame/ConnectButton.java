@@ -1,5 +1,4 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,7 @@ public class ConnectButton extends JButton {
         setBorderPainted(false);
         setContentAreaFilled(false);
         setBounds(20, 100, WIDTH, HEIGHT);
-        setText("Connect");
+        setText("Multi  player");
     }
 
     @Override
@@ -37,10 +36,6 @@ public class ConnectButton extends JButton {
         g2.dispose();
         super.paintComponent(g);
     }
-    public static class StartButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            StartFrame startFrame = new StartFrame();
-            startFrame.setVisible(true);
-        }
-    }
+
+
 }

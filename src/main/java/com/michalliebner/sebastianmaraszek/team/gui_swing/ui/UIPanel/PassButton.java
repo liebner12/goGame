@@ -3,19 +3,18 @@ package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
 import javax.swing.*;
 import java.awt.*;
 
-
-public class StartButton extends JButton {
-    private static final int WIDTH = 172;
+public class PassButton extends JButton {
+    private static final int WIDTH = 362;
     private static final int HEIGHT = 40;
-    public StartButton() {
+    public PassButton() {
         Cursor cursor= new Cursor(Cursor.HAND_CURSOR);
         setCursor(cursor);
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setBounds(17, 630, WIDTH, HEIGHT);
-        setText("START");
+        setBounds(17, 570, WIDTH, HEIGHT);
+        setText("PASS");
     }
 
     @Override
@@ -35,5 +34,4 @@ public class StartButton extends JButton {
         g2.dispose();
         super.paintComponent(g);
     }
-
 }

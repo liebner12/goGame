@@ -1,7 +1,7 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel;
-
 import javax.swing.*;
 import java.awt.*;
+
 
 public class SurrenderButton extends JButton {
     private static final int WIDTH = 172;

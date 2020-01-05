@@ -1,10 +1,10 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 
-import static java.lang.Thread.sleep;
-
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.*;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Board;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Piece;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.ConnectButton;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.OfflineButton;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.StartFrame;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.*;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.StartFramePanel;
@@ -12,32 +12,34 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JEditorPane;
+
 
 public class GoGameGuiController {
-    Socket s;
-    ObjectOutputStream p;
-    Boolean turn;
-
+    private Socket connection;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+    private Boolean turn;
+    private DataOutputStream outputStream;
+    private byte type;
     private GoGameGui mainFrame;
     private UI ui;
     private Window window;
     private Board board;
     private StartFramePanel startFramePanel;
     private StartFrame startFrame;
+    private StartButton startButton;
+    private SurrenderButton surrenderButton;
+    private ConnectButton connectButton;
+    private PassButton passButton;
+    private TwoInt twoInt;
+    private List<Piece> received;
+    private OfflineButton offlineButton;
     public GoGameGuiController() throws IOException {
         initComponents();
         initListeners();
-        addBoardButtons();
     }
     private void initComponents() throws IOException {
         turn= false;
@@ -47,22 +49,24 @@ public class GoGameGuiController {
         ui = mainFrame.getUIPanel();
         board = mainFrame.getBoard();
         startFramePanel = startFrame.getStartFramePanel();
+        startButton = ui.getStartButton();
+        surrenderButton = ui.getSurrenderButton();
+        connectButton = startFramePanel.getConnectButton();
+        passButton = ui.getPassButton();
+        offlineButton = startFramePanel.getOfflineButton();
     }
     public void showMainFrameWindow(){
         mainFrame.setVisible(true);
     }
     private void initListeners() {
         window.initListeners();
-        ui.initListeners();
-    }
-
-    private void addBoardButtons() {
-        board.addButtons(new BoardPiecesListener());
+        addButtonsListener();
     }
 
 
     private class BoardPiecesListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
+            type=2;
             for(int i=0; i<13; i++){
                 for(int j=0; j<13; j++){
                     if(e.getSource()==board.Buttons[i][j]){
@@ -71,29 +75,112 @@ public class GoGameGuiController {
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-
-                        //board.play(virtualBoard.getGameBoard());
                     }
                 }
             }
         }
     }
+
+
+    private void addButtonsListener(){
+
+        board.addButtons(new BoardPiecesListener());
+        startButton.addActionListener(new startButtonListener());
+        surrenderButton.addActionListener(new surrenderButtonListener());
+        connectButton.addActionListener(new connectButtonListener());
+        passButton.addActionListener(new passButtonListener());
+        offlineButton.addActionListener(new offlineButtonListener());
+    }
+    private class startButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            startFrame.setVisible(true);
+        }
+    }
+    private class offlineButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            type=0;
+            ableToPlace(true);
+            try {
+
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+    private class connectButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            type=1;
+
+            try {
+
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+    private class passButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            ableToPlace(true);
+        }
+    }
+    private class surrenderButtonListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            ableToPlace(false);
+        }
+    }
+    private void ableToPlace(final boolean lean){
+        for(int i=0; i<13; i++) {
+            for (int j = 0; j < 13; j++) {
+                board.Buttons[i][j].setEnabled(lean);
+            }
+        }
+    }
+
+
+    private void closeServer(){
+        try{
+            output.close();
+            input.close();
+            connection.close();
+        }catch(IOException ioException){
+            ioException.printStackTrace();
+        }
+    }
+    private void connectToServer() throws IOException{
+        connection = new Socket("localhost", 510);
+    }
+
+    private void boardInput()throws IOException{
+            try {
+                input = new ObjectInputStream(connection.getInputStream());
+                received = (List<Piece>) input.readObject();
+                board.play(received);
+            }catch(ClassNotFoundException classNotFoundException){
+            }
+
+    }
+    private void boardOutput()throws IOException{
+        outputStream = new DataOutputStream(connection.getOutputStream());
+        outputStream.writeByte(type);
+        outputStream.flush();
+        output = new ObjectOutputStream(connection.getOutputStream());
+        output.writeObject(twoInt);
+        output.flush();
+    }
+    private void singleMulti()throws IOException{
+        connectToServer();
+        outputStream = new DataOutputStream(connection.getOutputStream());
+        outputStream.writeByte(type);
+        outputStream.flush();
+        outputStream.close();
+    }
     public void processInformation(int x, int y) throws Exception {
-        Socket s = new Socket("localhost", 510);
-        ObjectOutputStream p = new ObjectOutputStream(s.getOutputStream());
-
-        TwoInt twoInt=new TwoInt(x,y);
-        p.writeObject(twoInt);
-        p.flush();
-
-        ObjectInputStream b = new ObjectInputStream(s.getInputStream());
-        List<Piece> received = (List<Piece>) b.readObject();
-        System.out.println("got");
-        board.play(received);
-
-        p.close();
-        b.close();
-        s.close();
+        connectToServer();
+        twoInt=new TwoInt(x,y);
+        boardOutput();
+        boardInput();
+        ableToPlace(false);
+        closeServer();
     }
 
 }

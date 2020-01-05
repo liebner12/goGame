@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import javafx.util.Pair;
+
 
 public class VirtualBoard{
     Player BlackPlayer;
@@ -35,40 +35,40 @@ public class VirtualBoard{
 
     Piece LastPiece;
 
-        public VirtualBoard() {
-            ChainList=new ArrayList<PiecesChain>();
-            PieceList=new ArrayList<Piece>();
+    public VirtualBoard() {
+        ChainList=new ArrayList<PiecesChain>();
+        PieceList=new ArrayList<Piece>();
 
-            BlackPlayer=new Player();
-            WhitePlayer=new Player();
+        BlackPlayer=new Player();
+        WhitePlayer=new Player();
 
-            BlackPlayer.setColor(BLACK);
-            WhitePlayer.setColor(WHITE);
-        }
+        BlackPlayer.setColor(BLACK);
+        WhitePlayer.setColor(WHITE);
+    }
 
     public void setPieceList(){
-            WhitePlayer.PieceList.clear();
-            BlackPlayer.PieceList.clear();
-            for(Piece piece : PieceList) {
-                if (piece.getColor() == white)
-                    WhitePlayer.PieceList.add(piece);
-                else
-                    BlackPlayer.PieceList.add(piece);
-            }
+        WhitePlayer.PieceList.clear();
+        BlackPlayer.PieceList.clear();
+        for(Piece piece : PieceList) {
+            if (piece.getColor() == white)
+                WhitePlayer.PieceList.add(piece);
+            else
+                BlackPlayer.PieceList.add(piece);
         }
+    }
 
     public void addPiece(int x, int y){
-            if(!WhitePlayer.isBot){ //jesli nie bierze udzialu bot, gramy multiplayera
+        if(!WhitePlayer.isBot){ //jesli nie bierze udzialu bot, gramy multiplayera
             Multiplayer(x,y);}
-            else{ //jesli bierze udzial bot no to single playera
+        else{ //jesli bierze udzial bot no to single playera
             try {
-               SinglePlayer(x,y);
+                SinglePlayer(x,y);
             }
             catch (Exception e){}
         }}
 
     private void Multiplayer(int x, int y) {
-            if (checkFree(x,y)){
+        if (checkFree(x,y)){
             changeTurn();
             if (!turn)
                 PlayBlackPiece(x, y);
@@ -78,65 +78,65 @@ public class VirtualBoard{
     }
 
     public void resetKO(Color color){
-            if(LastPiece!=null){
+        if(LastPiece!=null){
             if(LastPiece.getColor()!=color)
                 LastPiece=null;}
     }
 
- public void SinglePlayer(int x, int y){
-         if(turn){//ruch uzytkownika taki sam jak w multiplayerze
-             PlayBlackPiece(x,y);
-         }
+    public void SinglePlayer(int x, int y){
+        if(turn){//ruch uzytkownika taki sam jak w multiplayerze
+            PlayBlackPiece(x,y);
+        }
         else{
-         PlayWhitePiece(PlayBotPiece().getX(),PlayBotPiece().getY());//ruch bota
-            }
+            PlayWhitePiece(PlayBotPiece().getX(),PlayBotPiece().getY());//ruch bota
+        }
+    }
+
+    /**  zwracanie listy pionkow i ich pozycji*/
+    public List<Piece> getGameBoard(){
+        killCheck();
+        chainKillCheck();
+        CalculatePieces();
+        WhiteTerritory();
+        BlackTerrirtory();
+        return PieceList;
+    }
+
+    /** funkcja zwracajaca TRUE jesli miejsce jest wolne, lub FALSE jesli miejsce jest niedostepne
+     * Miejsce jest niedostepne, jesli stoi na nim inny pionek, badz postawienie na nim pionka bedzie wiazalo sie z samobojstwem*/
+    private boolean checkFree(int x, int y){
+        Piece piece2;
+        boolean possiblekill=false;
+        if(!turn){
+            piece2=new WhitePiece();
+            piece2.setX(x);
+            piece2.setY(y);
+            piece2.fullBreathNumber();}
+        else {
+            piece2 = new BlackPiece();
+            piece2.setX(x);
+            piece2.setY(y);
+            piece2.fullBreathNumber();
         }
 
-                /**  zwracanie listy pionkow i ich pozycji*/
-    public List<Piece> getGameBoard(){
-            killCheck();
-            chainKillCheck();
-            CalculatePieces();
-            WhiteTerritory();
-            BlackTerrirtory();
-            return PieceList;
-    }
-
-/** funkcja zwracajaca TRUE jesli miejsce jest wolne, lub FALSE jesli miejsce jest niedostepne
- * Miejsce jest niedostepne, jesli stoi na nim inny pionek, badz postawienie na nim pionka bedzie wiazalo sie z samobojstwem*/
-private boolean checkFree(int x, int y){
-    Piece piece2;
-    boolean possiblekill=false;
-    if(!turn){
-        piece2=new WhitePiece();
-        piece2.setX(x);
-        piece2.setY(y);
-        piece2.fullBreathNumber();}
-    else {
-        piece2 = new BlackPiece();
-        piece2.setX(x);
-        piece2.setY(y);
-        piece2.fullBreathNumber();
-    }
-
-    if(KamikazePiece(piece2)){
-        return true;
-    }
-    if(!SuicideChain(piece2)){
-        return false;
-    }
-    for(Piece piece : PieceList){
-        if(piece.getX()==x && piece.getY()==y){
-            return false;}
-        else if (neighbourPieces(piece, piece2)){
-            if (piece.getColor() != piece2.getColor()) {
+        if(KamikazePiece(piece2)){
+            return true;
+        }
+        if(!SuicideChain(piece2)){
+            return false;
+        }
+        for(Piece piece : PieceList){
+            if(piece.getX()==x && piece.getY()==y){
+                return false;}
+            else if (neighbourPieces(piece, piece2)){
+                if (piece.getColor() != piece2.getColor()) {
                     if(piece.getBreathNumber()==1){
                         possiblekill=true;
                         immortal=piece2;
                     }
                     piece2.setBreathNumber(piece2.getBreathNumber()-1);//za kazdym razem jak jest kolo pionka pionek innego koloru dodaj 1, jesli bedziesz mial 4 znaczy ze nie mozesz postawic
-            }
-        }}
+                }
+            }}
 
         if(piece2.getBreathNumber()<=0){
             if(!possiblekill){
@@ -148,8 +148,8 @@ private boolean checkFree(int x, int y){
             else{
                 LastPiece = piece2;
             }}
-    return true;
-}
+        return true;
+    }
     public boolean KamikazePiece(Piece piece){
         Color color=piece.getColor();
         if(color==white){
@@ -187,9 +187,9 @@ private boolean checkFree(int x, int y){
                             return false;
                         }
                     }
-                    }
                 }
             }
+        }
         else {
             for(PiecesChain chain : WhitePlayer.ChainList){
                 if(chain.BreathsNumber()==1){
@@ -198,18 +198,18 @@ private boolean checkFree(int x, int y){
                             return false;
                         }
                     }
-        }}}
+                }}}
         return true;
-        }
+    }
 
     public void chainKillCheck(){
         for (PiecesChain pieceChain : ChainList) {
-                //System.out.println(pieceChain.BreathNumber());
-                //System.out.println(pieceChain.koleszka+ "koleszkow");
-                //System.out.println(pieceChain.wspulnywruk+ "wspolnych wroguw");
-            }
+            //System.out.println(pieceChain.BreathNumber());
+            //System.out.println(pieceChain.koleszka+ "koleszkow");
+            //System.out.println(pieceChain.wspulnywruk+ "wspolnych wroguw");
+        }
     }
-/** Sprawdzamy co na calej planszy ma 0 zyc i usuwamy z tego, po usunieciu przywracamy oddech tym obok niego(no bo znikł ten co zabierał)*/
+    /** Sprawdzamy co na calej planszy ma 0 zyc i usuwamy z tego, po usunieciu przywracamy oddech tym obok niego(no bo znikł ten co zabierał)*/
     public void killCheck(){
         List <Piece> toIngonre = new ArrayList<Piece>();
         List<Piece> toRemove = new ArrayList<Piece>();
@@ -223,31 +223,31 @@ private boolean checkFree(int x, int y){
             }
         }
         for (Piece piece : PieceList) {
-           if (piece.getBreathNumber() == 0 && !toIngonre.contains(piece)) {
+            if (piece.getBreathNumber() == 0 && !toIngonre.contains(piece)) {
                 if(LastPiece!=null && piece.getX()==LastPiece.getX() && piece.getY()==LastPiece.getY()){
                     LastPiece.setBreathNumber(0);
                     piece=LastPiece;
                 }
-                    if (!BlackPlayer.ChainContainsPiece(piece) && !WhitePlayer.ChainContainsPiece(piece)) {
-                            if(piece.getColor()==Color.black){
-                                BlackPlayer.addPrisoner();
-                            }
-                            else{
-                                WhitePlayer.addPrisoner();
-                            }
-                            toRemove.add(piece);}
+                if (!BlackPlayer.ChainContainsPiece(piece) && !WhitePlayer.ChainContainsPiece(piece)) {
+                    if(piece.getColor()==Color.black){
+                        BlackPlayer.addPrisoner();
+                    }
+                    else{
+                        WhitePlayer.addPrisoner();
+                    }
+                    toRemove.add(piece);}
 
-                 else {
+                else {
 
                     if(LastPiece!=null && neighbourPieces(LastPiece,piece)){
                         toRemove.remove(LastPiece);
                     }
                     if(piece.getColor()==Color.black){
-                    BlackPlayer.addPrisoner();
-                }
-                else{
-                   WhitePlayer.addPrisoner();
-                }
+                        BlackPlayer.addPrisoner();
+                    }
+                    else{
+                        WhitePlayer.addPrisoner();
+                    }
                     toRemove.add(piece);
                 }
             }
@@ -271,13 +271,13 @@ private boolean checkFree(int x, int y){
 
     private void breathCheck(Piece piece1){
         if(piece1.getColor()==BLACK){
-                    BlackPlayer.CheckAndAddToChain(piece1);
-                    BlackPlayer.scanForJoins();
+            BlackPlayer.CheckAndAddToChain(piece1);
+            BlackPlayer.scanForJoins();
             for (Piece piece2 : WhitePlayer.PieceList){
-                        if(neighbourPieces(piece1,piece2)){//inny kolor
-                                piece2.takeBreath(piece1.getX(),piece1.getY());
-                                piece1.takeBreath(piece2.getX(),piece2.getY());}}
-        handleChains(black);}
+                if(neighbourPieces(piece1,piece2)){//inny kolor
+                    piece2.takeBreath(piece1.getX(),piece1.getY());
+                    piece1.takeBreath(piece2.getX(),piece2.getY());}}
+            handleChains(black);}
         else {
             WhitePlayer.CheckAndAddToChain(piece1);
             WhitePlayer.scanForJoins();
@@ -285,9 +285,9 @@ private boolean checkFree(int x, int y){
                 if(neighbourPieces(piece1,piece2)){//inny kolor
                     piece2.takeBreath(piece1.getX(),piece1.getY());
                     piece1.takeBreath(piece2.getX(),piece2.getY());
-        }
+                }
             }
-    handleChains(white);
+            handleChains(white);
         }
     }
     private void handleChains(Color color){
@@ -307,8 +307,8 @@ private boolean checkFree(int x, int y){
                 if(chain.BreathsNumber()==0){
                     chainsToRemove.add(chain);
                 }
+            }
         }
-    }
 
         Iterator<PiecesChain> it = chainsToRemove.iterator();
         while (it.hasNext()) {
@@ -323,19 +323,19 @@ private boolean checkFree(int x, int y){
             for(Piece piece1 : PieceList){
                 toRemove.add(piece);
                 if(neighbourPieces(piece1,piece)){
-                if(piece1.getColor()!=color){
-                    piece1.setBreathNumber(piece1.getBreathNumber()+1);
+                    if(piece1.getColor()!=color){
+                        piece1.setBreathNumber(piece1.getBreathNumber()+1);
+                    }
                 }
             }
-            }
         }
-    if(color==BLACK){
-        BlackPlayer.ChainList.remove(chain);
-    }
-    else{
-        WhitePlayer.ChainList.remove(chain);
-    }
-    PieceList.removeAll(toRemove);
+        if(color==BLACK){
+            BlackPlayer.ChainList.remove(chain);
+        }
+        else{
+            WhitePlayer.ChainList.remove(chain);
+        }
+        PieceList.removeAll(toRemove);
     }
 
 
@@ -345,7 +345,7 @@ private boolean checkFree(int x, int y){
     }
     public boolean neighbourPieces(Piece piece1, Piece piece2){
         if((abs(piece1.getX()-piece2.getX())==0 && abs(piece1.getY()-piece2.getY())== 1) || (
-            abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
+                abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
             return true;
         }
         return false;
@@ -384,7 +384,7 @@ private boolean checkFree(int x, int y){
             if(piece.getColor()==white){
                 WhitePlayer.addTerritory();}
             else {
-            BlackPlayer.addTerritory();}
+                BlackPlayer.addTerritory();}
         }
     }
 
@@ -417,19 +417,19 @@ private boolean checkFree(int x, int y){
             if(firstchoice.size()>0){
                 int choice= abs(random.nextInt()%firstchoice.size()); //wybieramy losowo jeden tak aby sasiadowal(w co 2 przypadku)
                 white=firstchoice.get(choice);}}
-                TwoInt twoInt=new TwoInt(white.getX(),white.getY());
+        TwoInt twoInt=new TwoInt(white.getX(),white.getY());
         return twoInt;}
 
     public void WhiteTerritory() {
         WhitePlayer.setTerritory(WhitePlayer.getTerritory());
         // System.out.println("\nTERYTORIUM BIALEGO:"+WhitePlayer.getTerritory());
         //System.out.println("UWIEZIENI BIALEGO:"+WhitePlayer.getPrisoners());
-        }
+    }
 
     public void BlackTerrirtory(){
         BlackPlayer.setTerritory(BlackPlayer.getTerritory());
-      //  System.out.println("TERYTORIUM CZARNEGO:"+BlackPlayer.getTerritory());
-       // System.out.println("UWIEZIENI CZARNEGO:"+BlackPlayer.getPrisoners());
-         }
+        //  System.out.println("TERYTORIUM CZARNEGO:"+BlackPlayer.getTerritory());
+        // System.out.println("UWIEZIENI CZARNEGO:"+BlackPlayer.getPrisoners());
+    }
 
 }

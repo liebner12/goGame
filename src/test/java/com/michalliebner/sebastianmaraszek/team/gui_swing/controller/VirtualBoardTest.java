@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.BlackPiece;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Piece;
-import com.sun.corba.se.impl.interceptors.PICurrent;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;

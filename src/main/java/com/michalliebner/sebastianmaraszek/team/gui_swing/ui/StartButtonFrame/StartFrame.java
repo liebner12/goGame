@@ -2,7 +2,6 @@ package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
 public class StartFrame extends JFrame {
     private static final int WIDTH = 424;
@@ -15,10 +14,8 @@ public class StartFrame extends JFrame {
         setSize(WIDTH,HEIGHT);
         setContentPane(components());
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(2);
-    }
-    public StartFrame getStartFrame(){
-        return this;
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setResizable(false);
     }
     public StartFramePanel getStartFramePanel(){
         return startFramePanel;
@@ -29,6 +26,4 @@ public class StartFrame extends JFrame {
         add(startFramePanel);
         return container;
     }
-
-
 }
