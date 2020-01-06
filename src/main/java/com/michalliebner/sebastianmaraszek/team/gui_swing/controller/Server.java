@@ -1,7 +1,4 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
-
-
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,17 +10,25 @@ public class Server{
     private ObjectOutputStream output;
     private VirtualBoard board;
     private DataInputStream inputStream;
-    private byte type;
+    private int type=2;
     public Server(){
         board=new VirtualBoard();
         System.out.println("Server started");
-        board.PlayWithHuman();
+
     }
     public void startRunning(){
         try{
-            server = new ServerSocket(510);
+            server = new ServerSocket(49152);
+            waitForConnection();
+            gameMode();
+            connection.close();
+
             while (true){
                 try{
+                    if(type==0)
+                        board.PlayWithBot();
+                    if(type==1)
+                        board.PlayWithHuman();
                     waitForConnection();
                     boardReceived();
                     boardOutput();
@@ -33,8 +38,8 @@ public class Server{
                     closeCrap();
                 }
             }
-        }catch(IOException ioException){
-            ioException.printStackTrace();
+        }catch(Exception Exception){
+            Exception.printStackTrace();
         }
     }
 
@@ -54,24 +59,23 @@ public class Server{
         output.flush();
     }
     private void boardReceived() throws IOException, ClassNotFoundException {
-        inputStream = new DataInputStream(connection.getInputStream());
-        type = inputStream.readByte();
+        if(type==0||type==1) {
+            input = new ObjectInputStream(connection.getInputStream());
+            TwoInt received = (TwoInt) input.readObject();
+            board.addPiece(received.getX(), received.getY());
+        }
+    }
 
-        switch(type) {
-            case 0:
-
-                break;
-            case 1:
-
-
-                break;
-            case 2:
-                System.out.println(type);
-                input = new ObjectInputStream(connection.getInputStream());
-                TwoInt received = (TwoInt) input.readObject();
-                board.addPiece(received.getX(), received.getY());
-                break;
-
+    private void gameMode() throws IOException{
+        if(type==0)
+            board.PlayWithBot();
+        if(type==1)
+            board.PlayWithHuman();
+        if(type==2){
+            inputStream = new DataInputStream(connection.getInputStream());
+            type = inputStream.readInt();
+            System.out.println(type);
+            inputStream.close();
         }
     }
 

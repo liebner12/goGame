@@ -1,8 +1,6 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ConnectButton extends JButton {
     private static final int WIDTH = 172;

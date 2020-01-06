@@ -11,12 +11,10 @@ import static java.awt.Color.black;
 public class Board extends JPanel {
     Cursor cursor;
     List<Piece> pieceList=new ArrayList<>();
-    private ActionListener actionListener;
     public JButton[][] Buttons;
     private static final int WIDTH = 700;
     private static final int HEIGHT = 700;
     private Graphics2D g2;
-    private Graphics2D g;
     private final int BoardSizeInSquares = 12;
     private final int OneSquareSize = 50;
     private final int BoardCentre =
@@ -85,6 +83,7 @@ public class Board extends JPanel {
                 Buttons[i][j].setContentAreaFilled(false);
                 Buttons[i][j].setFocusPainted(false);
                 Buttons[i][j].setCursor(cursor);
+                Buttons[i][j].setEnabled(false);
                 add(Buttons[i][j]);
             }
         }
