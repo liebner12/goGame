@@ -4,7 +4,6 @@ import static java.awt.Color.WHITE;
 import static java.awt.Color.black;
 import static java.awt.Color.white;
 import static java.lang.Math.abs;
-import static java.lang.Thread.sleep;
 
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.BlackPiece;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Piece;
@@ -12,17 +11,10 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.PiecesCh
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.Player;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel.WhitePiece;
 import java.awt.Color;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 
 public class VirtualBoard{
@@ -84,12 +76,13 @@ public class VirtualBoard{
     }
 
     public void SinglePlayer(int x, int y){
-        TwoInt bot=PlayBotPiece();
-        if(!turn){//ruch uzytkownika taki sam jak w multiplayerze
-            PlayBlackPiece(x,y);
-        }
-        else{
-            PlayWhitePiece(bot.getX(),bot.getY());//ruch bota
+        if (checkFree(x,y)) {
+            TwoInt bot = PlayBotPiece();
+            if (!turn) {//ruch uzytkownika taki sam jak w multiplayerze
+                PlayBlackPiece(x, y);
+            } else {
+                PlayWhitePiece(bot.getX(), bot.getY());//ruch bota
+            }
         }
     }
 
@@ -99,7 +92,7 @@ public class VirtualBoard{
         chainKillCheck();
         CalculatePieces();
         WhiteTerritory();
-        BlackTerrirtory();
+        BlackTerritory();
         return PieceList;
     }
 
@@ -231,10 +224,10 @@ public class VirtualBoard{
                 }
                 if (!BlackPlayer.ChainContainsPiece(piece) && !WhitePlayer.ChainContainsPiece(piece)) {
                     if(piece.getColor()==Color.black){
-                        BlackPlayer.addPrisoner();
+                        WhitePlayer.addPrisoner();
                     }
                     else{
-                        WhitePlayer.addPrisoner();
+                        BlackPlayer.addPrisoner();
                     }
                     toRemove.add(piece);}
 
@@ -341,7 +334,7 @@ public class VirtualBoard{
 
 
 
-    private void changeTurn(){
+    public void changeTurn(){
         turn=!turn;
     }
     public boolean neighbourPieces(Piece piece1, Piece piece2){
@@ -421,16 +414,22 @@ public class VirtualBoard{
         TwoInt twoInt=new TwoInt(white.getX(),white.getY());
         return twoInt;}
 
-    public void WhiteTerritory() {
-        WhitePlayer.setTerritory(WhitePlayer.getTerritory());
+    public int WhiteTerritory() {
+        return WhitePlayer.setTerritory(WhitePlayer.getTerritory());
         // System.out.println("\nTERYTORIUM BIALEGO:"+WhitePlayer.getTerritory());
         //System.out.println("UWIEZIENI BIALEGO:"+WhitePlayer.getPrisoners());
     }
 
-    public void BlackTerrirtory(){
-        BlackPlayer.setTerritory(BlackPlayer.getTerritory());
+    public int BlackTerritory(){
+        return BlackPlayer.setTerritory(BlackPlayer.getTerritory());
         //  System.out.println("TERYTORIUM CZARNEGO:"+BlackPlayer.getTerritory());
         // System.out.println("UWIEZIENI CZARNEGO:"+BlackPlayer.getPrisoners());
+    }
+    public int BlackPrisoners(){
+        return BlackPlayer.setPrisoners(BlackPlayer.getPrisoners());
+    }
+    public int WhitePrisoners(){
+        return WhitePlayer.setPrisoners(WhitePlayer.getPrisoners());
     }
 
 }

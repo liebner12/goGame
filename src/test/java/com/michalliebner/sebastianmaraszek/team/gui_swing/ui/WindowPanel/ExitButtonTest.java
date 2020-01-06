@@ -13,6 +13,10 @@ public class ExitButtonTest {
     ExitButton exitButton=new ExitButton();
     ExitButtonLister exitButtonLister=new ExitButtonLister();
     @Test
+    public void ExitButton(){
+
+    }
+    @Test
     public void exitBtn(){
         exitButton.addActionListener(exitButtonLister);
         assertNotEquals(exitButton.getCursor(), getDefaultCursor());

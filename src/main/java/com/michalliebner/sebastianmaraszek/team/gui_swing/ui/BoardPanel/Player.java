@@ -92,8 +92,11 @@ public class Player {
     public void addTerritory(){
         territory++;
     }
-    public void setTerritory(int x){
-        territory=x;
+    public int setTerritory(int x){
+        return territory=x;
+    }
+    public int setPrisoners(int x){
+        return prisoners=x;
     }
     public int getPrisoners(){
         return prisoners;
