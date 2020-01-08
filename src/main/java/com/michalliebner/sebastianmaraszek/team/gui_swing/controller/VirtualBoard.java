@@ -90,12 +90,13 @@ public class VirtualBoard{
     }
 
     public void SinglePlayer(int x, int y){
-        TwoInt bot=PlayBotPiece();
-        if(!turn){//ruch uzytkownika taki sam jak w multiplayerze
-            PlayBlackPiece(x,y);
-        }
-        else{
-            PlayWhitePiece(bot.getX(),bot.getY());//ruch bota
+        if (checkFree(x,y)) {
+            TwoInt bot = PlayBotPiece();
+            if (!turn) {//ruch uzytkownika taki sam jak w multiplayerze
+                PlayBlackPiece(x, y);
+            } else {
+                PlayWhitePiece(bot.getX(), bot.getY());//ruch bota
+            }
         }
     }
 
