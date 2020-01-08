@@ -11,6 +11,8 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.*;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame.StartFramePanel;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.Results.ResultScore;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WinnerFrame.WinnerFrame;
+import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WinnerFrame.WinnerFramePanel;
 
 
 import javax.swing.*;
@@ -27,12 +29,7 @@ public class GoGameGuiController {
     private ObjectInputStream input;
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
-    private int type = 2;
-    private int changeTurn = 0;
-    private int inRow = 0;
-    private int turn = 1;
     private GoGameGui mainFrame;
-    private UI ui;
     private Window window;
     private Board board;
     private DecisionFrame decisionFrame;
@@ -54,10 +51,17 @@ public class GoGameGuiController {
     private BlackButton blackButton;
     private WhiteButton whiteButton;
     private EndGameButton endGameButton;
+    private WinnerFrame winnerFrame;
+    private JLabel winner;
+    private JLabel turnPoint1;
+    private JLabel turnPoint2;
     private int black;
     private int white;
-    private String blackString;
-    private String whiteString;
+    private int type = 2;
+    private int changeTurn = 0;
+    private int inRow = 0;
+    private int turn = 1;
+
     public GoGameGuiController() throws IOException {
         initComponents();
         initListeners();
@@ -67,9 +71,13 @@ public class GoGameGuiController {
         mainFrame = new GoGameGui();
         startFrame = new StartFrame();
         decisionFrame = new DecisionFrame();
+        winnerFrame = new WinnerFrame();
+        WinnerFramePanel winnerFramePanel = winnerFrame.getStartFramePanel();
         window = mainFrame.getWindow();
-        ui = mainFrame.getUIPanel();
+        UI ui = mainFrame.getUIPanel();
         board = mainFrame.getBoard();
+        turnPoint1 = mainFrame.getResults().getPointTurn1();
+        turnPoint2 = mainFrame.getResults().getPointTurn2();
         DecisionFramePanel decisionFramePanel = decisionFrame.getDecisionFramePanel();
         StartFramePanel startFramePanel = startFrame.getStartFramePanel();
         startButton = ui.getStartButton();
@@ -88,6 +96,7 @@ public class GoGameGuiController {
         blackButton = decisionFramePanel.getBlackButton();
         whiteButton = decisionFramePanel.getWhiteButton();
         endGameButton = decisionFramePanel.getEndGameButton();
+        winner = winnerFramePanel.getText();
     }
 
     public void showMainFrameWindow() {
@@ -97,6 +106,7 @@ public class GoGameGuiController {
     private void initListeners() {
         window.initListeners();
         addButtonsListener();
+        setTurnPoint();
     }
 
     private class BoardPiecesListener implements ActionListener {
@@ -108,7 +118,7 @@ public class GoGameGuiController {
                             if(inRow<2) {
                                 inRow=0;
                                 processInformation(i, j);
-
+                                setTurnPoint();
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -116,6 +126,16 @@ public class GoGameGuiController {
                     }
                 }
             }
+        }
+    }
+    private void setTurnPoint(){
+        if(turn==1) {
+            turnPoint1.setVisible(true);
+            turnPoint2.setVisible(false);
+        }
+        else if(turn==0){
+            turnPoint1.setVisible(false);
+            turnPoint2.setVisible(true);
         }
     }
 
@@ -169,12 +189,15 @@ public class GoGameGuiController {
     private class passButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (type == 1 || type == 0) {
+
                 changeTurn=1;
                 inRow++;
                 if(turn==0)
                     turn = 1;
+
                 else if(turn==1)
                     turn = 0;
+                setTurnPoint();
             }
             if(inRow>=2){
                 decisionFrame.setVisible(true);
@@ -184,11 +207,12 @@ public class GoGameGuiController {
 
     private class surrenderButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            winnerFrame.setVisible(true);
             if(turn==1){
-                System.out.println("White wins");
+                winner.setText("White player wins!!!");
             }
             if(turn==0){
-                System.out.println("Black wins");
+                winner.setText("Black player wins!!!");
             }
             ableToPlace(false);
             passButton.setEnabled(false);
@@ -199,8 +223,8 @@ public class GoGameGuiController {
 
     private class endGameButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            whiteString = whiteScoresField.getText();
-            blackString = blackScoresField.getText();
+            String whiteString = whiteScoresField.getText();
+            String blackString = blackScoresField.getText();
             inRow=0;
             decisionFrame.setVisible(false);
             ableToPlace(false);
@@ -208,6 +232,11 @@ public class GoGameGuiController {
             surrenderButton.setEnabled(false);
             blackResultScore.setText(blackString);
             whiteResultScore.setText(whiteString);
+            if(black>white)
+                winner.setText("Black player wins!!!");
+            if(black<white)
+                winner.setText("White player wins!!!");
+            winnerFrame.setVisible(true);
         }
     }
     private class blackButtonListener implements ActionListener{
@@ -215,6 +244,7 @@ public class GoGameGuiController {
             turn=1;
             inRow=0;
             decisionFrame.setVisible(false);
+            setTurnPoint();
         }
     }
     private class whiteButtonListener implements ActionListener{
@@ -222,6 +252,7 @@ public class GoGameGuiController {
             turn=0;
             inRow=0;
             decisionFrame.setVisible(false);
+            setTurnPoint();
         }
     }
     private void ableToPlace(final boolean lean) {
@@ -308,6 +339,4 @@ public class GoGameGuiController {
         boardInput();
         closeServer();
     }
-
-
 }

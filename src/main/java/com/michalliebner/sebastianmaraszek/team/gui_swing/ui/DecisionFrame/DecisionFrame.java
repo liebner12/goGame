@@ -6,7 +6,7 @@ import java.awt.*;
 public class DecisionFrame extends JFrame {
     private static final int WIDTH = 424;
     private static final int HEIGHT = 400;
-    private Container container = getContentPane();
+    private final Container container = getContentPane();
     private DecisionFramePanel decisionFramePanel;
     public DecisionFrame(){
         setLayout(null);

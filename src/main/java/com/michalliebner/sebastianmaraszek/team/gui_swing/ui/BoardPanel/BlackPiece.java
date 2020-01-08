@@ -1,14 +1,11 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
-import com.michalliebner.sebastianmaraszek.team.gui_swing.controller.TwoInt;
 import java.awt.Color;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlackPiece implements Piece, Serializable {
     private int size=50;
-    private boolean[][] BreathPosition;
+    private final boolean[][] BreathPosition;
     private Color color=Color.BLACK;
     private int posX;
     private int posY;
@@ -66,27 +63,19 @@ public class BlackPiece implements Piece, Serializable {
 
     @Override
     public boolean isInCorner() {
-        if((getX()==0 && getY()==0) || (getX()==12 & getY()==0) || (getX()==12 & getY()==12) || (getX()==0 & getY()==12)){
-            return true;
-        }
-        else return false;
+        return (getX() == 0 && getY() == 0) || (getX() == 12 & getY() == 0) || (getX() == 12 & getY() == 12) || (getX() == 0 & getY() == 12);
     }
 
     @Override
     public boolean isInCentre() {
-        if(!isOnBorder() && !isInCorner()){
-            return true;
-        }
-        return false;
+        return !isOnBorder() && !isInCorner();
     }
 
     @Override
     public boolean isOnBorder() {
         if(!isInCorner()) {
-            if (getX() == 0 || getY() == 0 || getX() == 12 || getY() == 12) {
-
-                return true;
-            }}
+            return getX() == 0 || getY() == 0 || getX() == 12 || getY() == 12;
+        }
         return false;
     }
 

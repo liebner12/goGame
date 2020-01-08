@@ -2,8 +2,6 @@ package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.BoardPanel;
 
 import static java.lang.Math.abs;
 
-import com.michalliebner.sebastianmaraszek.team.gui_swing.controller.VirtualBoard;
-import com.sun.net.httpserver.Filter.Chain;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +14,8 @@ public class Player {
 
     public PiecesChain tempToDelete=new PiecesChain();
     public PiecesChain tempToAdd=new PiecesChain();
-    public List<Piece> PieceList=new ArrayList<Piece>();
-    public List<PiecesChain> ChainList=new ArrayList<PiecesChain>();
+    public final List<Piece> PieceList= new ArrayList<>();
+    public final List<PiecesChain> ChainList= new ArrayList<>();
     public boolean isBot;
 
 
@@ -105,11 +103,8 @@ public class Player {
         return territory;
     }
     public boolean neighbourPieces(Piece piece1, Piece piece2){
-        if((abs(piece1.getX()-piece2.getX())==0 && abs(piece1.getY()-piece2.getY())== 1) || (
-            abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
-            return true;
-        }
-        return false;
+        return (abs(piece1.getX() - piece2.getX()) == 0 && abs(piece1.getY() - piece2.getY()) == 1) || (
+                abs(piece1.getX() - piece2.getX()) == 1 && abs(piece1.getY() - piece2.getY()) == 0);
     }
 
 }

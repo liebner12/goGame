@@ -1,7 +1,5 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.UIPanel.Results;
 
-import com.michalliebner.sebastianmaraszek.team.gui_swing.controller.VirtualBoard;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -12,26 +10,18 @@ import java.io.IOException;
 public class Results extends JPanel {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 520;
-    private JLabel blackResultLabel;
-    private JLabel whiteResultLabel;
-    private JLabel score;
     private ResultScore blackResultScore;
     private ResultScore whiteResultScore;
-    private JLabel territory;
     private ResultScore blackResultTerritory;
     private ResultScore whiteResultTerritory;
-    private JLabel prisoners;
     private ResultScore blackResultPrisoners;
     private ResultScore whiteResultPrisoners;
     private static final int WIDTHFIELD = 172;
     private static final int HEIGHTFIELD = 40;
     private static final int WIDTHLABEL = 120;
     private static final int HEIGHTLABEL = 30;
-    private BufferedImage myPicture1;
-    private BufferedImage myPicture2;
-    private BufferedImage myPicture3;
-    private BufferedImage myPicture4;
-    private BufferedImage myPicture5;
+    private JLabel turnPoint1;
+    private JLabel turnPoint2;
 
     public Results() {
         setLayout(null);
@@ -40,14 +30,15 @@ public class Results extends JPanel {
     }
 
     public void initResults() throws IOException {
-        myPicture4 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\79407459_679389379255901_3066448809295872000_n.png"));
-        blackResultLabel = new JLabel(new ImageIcon(myPicture4));
+        whoTurn();
+        BufferedImage myPicture4 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\79407459_679389379255901_3066448809295872000_n.png"));
+        JLabel blackResultLabel = new JLabel(new ImageIcon(myPicture4));
         blackResultLabel.setBounds(45, 0, WIDTHLABEL, HEIGHTLABEL+20);
-        myPicture5 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\białe.png"));
-        whiteResultLabel = new JLabel(new ImageIcon(myPicture5));
+        BufferedImage myPicture5 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\białe.png"));
+        JLabel whiteResultLabel = new JLabel(new ImageIcon(myPicture5));
         whiteResultLabel.setBounds(235, 0, WIDTHLABEL, HEIGHTLABEL+20);
-        myPicture2 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-leaderboard-50.png"));
-        score = new JLabel(new ImageIcon(myPicture2));
+        BufferedImage myPicture2 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-leaderboard-50.png"));
+        JLabel score = new JLabel(new ImageIcon(myPicture2));
         score.setBounds(137, 70, WIDTHLABEL, HEIGHTLABEL);
         blackResultScore = new ResultScore();
         blackResultScore.setBounds(17, 120, WIDTHFIELD, HEIGHTFIELD);
@@ -55,8 +46,8 @@ public class Results extends JPanel {
         whiteResultScore = new ResultScore();
         whiteResultScore.setBounds(207, 120, WIDTHFIELD, HEIGHTFIELD);
         whiteResultScore.setText("0");
-        myPicture3 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\77328842_573493556801356_6734551369153249280_n.png"));
-        territory = new JLabel(new ImageIcon(myPicture3));
+        BufferedImage myPicture3 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\77328842_573493556801356_6734551369153249280_n.png"));
+        JLabel territory = new JLabel(new ImageIcon(myPicture3));
         territory.setBounds(135, 200, WIDTHLABEL, HEIGHTLABEL+20);
         blackResultTerritory = new ResultScore();
         blackResultTerritory.setBounds(17, 270, WIDTHFIELD, HEIGHTFIELD);
@@ -65,8 +56,8 @@ public class Results extends JPanel {
         whiteResultTerritory.setBounds(207, 270, WIDTHFIELD, HEIGHTFIELD);
         whiteResultTerritory.setText("0");
 
-        myPicture1 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-prisoner-60.png"));
-        prisoners = new JLabel(new ImageIcon(myPicture1));
+        BufferedImage myPicture1 = ImageIO.read(new File("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\UIPanel\\Results\\icons8-prisoner-60.png"));
+        JLabel prisoners = new JLabel(new ImageIcon(myPicture1));
         prisoners.setBounds(167,345,60,60);
         blackResultPrisoners = new ResultScore();
         blackResultPrisoners.setBounds(17, 420, WIDTHFIELD, HEIGHTFIELD);
@@ -88,6 +79,19 @@ public class Results extends JPanel {
         add(prisoners);
         add(blackResultPrisoners);
         add(whiteResultPrisoners);
+
+        add(turnPoint1);
+        add(turnPoint2);
+    }
+    public void whoTurn(){
+        turnPoint1 = new JLabel("*");
+        turnPoint1.setForeground(Color.DARK_GRAY);
+        turnPoint1.setFont(new Font("Arial", Font.BOLD, 24));
+        turnPoint1.setBounds(30,20,24,24);
+        turnPoint2 = new JLabel("*");
+        turnPoint2.setForeground(Color.DARK_GRAY);
+        turnPoint2.setFont(new Font("Arial", Font.BOLD, 24));
+        turnPoint2.setBounds(363,20,24,24);
     }
 
     public ResultScore getBlackResultTerritory(){
@@ -108,6 +112,11 @@ public class Results extends JPanel {
     public ResultScore getWhiteResultPrisoners(){
         return whiteResultPrisoners;
     }
-
+    public JLabel getPointTurn1(){
+        return turnPoint1;
+    }
+    public JLabel getPointTurn2(){
+        return turnPoint2;
+    }
 
 }

@@ -9,12 +9,11 @@ public class Server {
     private Socket connection;
     private ObjectInputStream input;
     private ObjectOutputStream output;
-    private VirtualBoard board;
+    private final VirtualBoard board;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private int type = 2;
     private int changeTurn = 0;
-    private int newTurn = 1;
 
     public Server() {
         board = new VirtualBoard();
@@ -87,7 +86,7 @@ public class Server {
             changeTurn = inputStream.readInt();
             System.out.println(changeTurn);
             passTurn();
-            newTurn = inputStream.readInt();
+            int newTurn = inputStream.readInt();
             board.setTurn(newTurn);
             input = new ObjectInputStream(connection.getInputStream());
             TwoInt received = (TwoInt) input.readObject();
@@ -116,6 +115,5 @@ public class Server {
 
         }
     }
-
 
 }

@@ -1,32 +1,32 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WinnerFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class StartFrame extends JFrame {
+public class WinnerFrame extends JFrame {
     private static final int WIDTH = 424;
-    private static final int HEIGHT = 200;
+    private static final int HEIGHT = 124;
     private final Container container = getContentPane();
-    private StartFramePanel startFramePanel;
+    private WinnerFramePanel winnerFramePanel;
 
-    public StartFrame(){
-        setLayout(null);
+    public WinnerFrame(){
         ImageIcon imageIcon = new ImageIcon("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\IconGo.png");
         setIconImage(imageIcon.getImage());
-        setTitle("StartGo");
+        setLayout(null);
+        setTitle("Winner!!!");
         setSize(WIDTH,HEIGHT);
         setContentPane(components());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setResizable(false);
     }
-    public StartFramePanel getStartFramePanel(){
-        return startFramePanel;
+    public WinnerFramePanel getStartFramePanel(){
+        return winnerFramePanel;
     }
     private Container components(){
-        startFramePanel = new StartFramePanel();
-        startFramePanel.initStartFrame();
-        add(startFramePanel);
+        winnerFramePanel = new WinnerFramePanel();
+        winnerFramePanel.initStartFrame();
+        add(winnerFramePanel);
         return container;
     }
 }

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ExitIconTest {
-    ExitIcon e = new ExitIcon();
+    final ExitIcon e = new ExitIcon();
 
 
     @Test

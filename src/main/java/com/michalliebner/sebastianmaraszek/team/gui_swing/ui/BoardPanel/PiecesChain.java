@@ -3,16 +3,14 @@ import static java.lang.Math.abs;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class PiecesChain {
-    private List<Piece> pieces=new ArrayList<Piece>();
+    private final List<Piece> pieces= new ArrayList<>();
     private Color color;
     private int breaths,enemies;
-    private boolean[][] BreathsPosition=new boolean[13][13];
+    private final boolean[][] BreathsPosition=new boolean[13][13];
 
     public PiecesChain(){}
 
@@ -76,10 +74,7 @@ public class PiecesChain {
     }
 
     private boolean neighbourPieces(Piece piece1, Piece piece2){
-        if((abs(piece1.getX()-piece2.getX())==0 && abs(piece1.getY()-piece2.getY())== 1) || (
-            abs(piece1.getX()-piece2.getX())==1 && abs(piece1.getY()-piece2.getY())== 0)){
-            return true;
-        }
-        return false;
-            }
+        return (abs(piece1.getX() - piece2.getX()) == 0 && abs(piece1.getY() - piece2.getY()) == 1) || (
+                abs(piece1.getX() - piece2.getX()) == 1 && abs(piece1.getY() - piece2.getY()) == 0);
+    }
         }

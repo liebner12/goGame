@@ -1,7 +1,5 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.ui;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class GoGameGuiTest {

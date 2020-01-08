@@ -1,11 +1,9 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
-import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.GoGameGui;
 import java.io.IOException;
-import org.junit.Assert;
+
 import org.junit.Test;
 
 public class GoGameGuiControllerTest {

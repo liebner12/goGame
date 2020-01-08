@@ -20,12 +20,12 @@ import java.util.Random;
 
 
 public class VirtualBoard {
-    Player BlackPlayer;
-    Player WhitePlayer;
+    final Player BlackPlayer;
+    final Player WhitePlayer;
     Boolean turn = true;
     Piece immortal;
-    List<Piece> PieceList;// lista pionkow na planszy
-    List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
+    final List<Piece> PieceList;// lista pionkow na planszy
+    final List<PiecesChain> ChainList; // lista wszystkich lancuchow na planszy
 
     Piece LastPiece;
 
@@ -52,7 +52,7 @@ public class VirtualBoard {
     }
 
     public int whichTurn() {
-        if (turn == true)
+        if (turn)
             return 1;
         else
             return 0;
@@ -363,11 +363,8 @@ public class VirtualBoard {
     }
 
     public boolean neighbourPieces(Piece piece1, Piece piece2) {
-        if ((abs(piece1.getX() - piece2.getX()) == 0 && abs(piece1.getY() - piece2.getY()) == 1) || (
-                abs(piece1.getX() - piece2.getX()) == 1 && abs(piece1.getY() - piece2.getY()) == 0)) {
-            return true;
-        }
-        return false;
+        return (abs(piece1.getX() - piece2.getX()) == 0 && abs(piece1.getY() - piece2.getY()) == 1) || (
+                abs(piece1.getX() - piece2.getX()) == 1 && abs(piece1.getY() - piece2.getY()) == 0);
     }
 
     public void PlayWithBot() {

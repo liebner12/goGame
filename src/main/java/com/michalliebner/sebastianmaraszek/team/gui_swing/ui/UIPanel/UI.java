@@ -8,10 +8,12 @@ public class UI extends JPanel {
     private SurrenderButton surrenderButton;
     private StartButton startButton;
     private PassButton passButton;
+
     public UI(){
         setLayout(null);
         setBounds(770,30,WIDTH,HEIGHT);
     }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -26,10 +28,14 @@ public class UI extends JPanel {
         passButton = new PassButton();
         startButton = new StartButton();
         surrenderButton = new SurrenderButton();
+
+
         add(passButton);
         add(surrenderButton);
         add(startButton);
+
     }
+
     public StartButton getStartButton(){
         return startButton;
     }
@@ -39,5 +45,6 @@ public class UI extends JPanel {
     public PassButton getPassButton(){
         return passButton;
     }
+
 
 }

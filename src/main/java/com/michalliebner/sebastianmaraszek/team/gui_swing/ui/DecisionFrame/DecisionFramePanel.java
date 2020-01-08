@@ -18,7 +18,7 @@ public class DecisionFramePanel extends JPanel {
     private JLabel whiteScore;
     private JFormattedTextField blackScoreField;
     private JFormattedTextField whiteScoreField;
-    private NumberFormat format;
+
     public DecisionFramePanel() {
         setLayout(null);
         setBounds(0, 0, WIDTH, HEIGHT);
@@ -57,7 +57,7 @@ public class DecisionFramePanel extends JPanel {
         blackScore.setForeground(new Color(245, 245, 249));
     }
     public void setBoundsWhiteBlackScoreField(){
-        format = NumberFormat.getIntegerInstance();
+        NumberFormat format = NumberFormat.getIntegerInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setAllowsInvalid(false);
 
