@@ -14,7 +14,6 @@ import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WindowPanel.Window;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WinnerFrame.WinnerFrame;
 import com.michalliebner.sebastianmaraszek.team.gui_swing.ui.WinnerFrame.WinnerFramePanel;
 
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,6 +60,10 @@ public class GoGameGuiController {
     private int changeTurn = 0;
     private int inRow = 0;
     private int turn = 1;
+    private int whiteTerritory;
+    private int blackTerritory;
+    private int whitePrisoners;
+    private int blackPrisoners;
 
     public GoGameGuiController() throws IOException {
         initComponents();

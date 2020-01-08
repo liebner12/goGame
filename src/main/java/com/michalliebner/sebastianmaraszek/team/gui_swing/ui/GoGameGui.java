@@ -7,20 +7,16 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import javax.swing.*;
-
 public class GoGameGui extends JFrame {
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 760;
-
     private Board Board;
     private UI UI;
     private Window window;
-    private final Container container = getContentPane();
+    private Container container = getContentPane();
     private Results results;
 
     public GoGameGui() throws IOException {
-        ImageIcon imageIcon = new ImageIcon("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\IconGo.png");
-        setIconImage(imageIcon.getImage());
         setLayout(null);
         setTitle("GoGame");
         setUndecorated(true);
@@ -50,13 +46,10 @@ public class GoGameGui extends JFrame {
         Board = new Board();
         UI = new UI();
         UI.initUI();
-
         add(results);
         add(UI);
         add(Board);
         add(window);
-
         return container;
     }
 }
-
