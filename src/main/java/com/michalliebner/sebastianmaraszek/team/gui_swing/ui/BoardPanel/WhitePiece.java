@@ -4,109 +4,93 @@ import java.awt.Color;
 import java.io.Serializable;
 
 public class WhitePiece implements Piece, Serializable {
-    private int size=50;
-    private Color color=Color.WHITE;
+    private int size = 50;
+    private Color color;
     private int posX;
     private int posY;
-    private int breath=4;
-    private final boolean[][] BreathPosition;
+    private int breath;
+    private boolean[][] BreathPosition;
 
-
-    public WhitePiece(){
-        BreathPosition=new boolean[13][13];
+    public WhitePiece() {
+        this.color = Color.WHITE;
+        this.breath = 4;
+        this.BreathPosition = new boolean[13][13];
     }
-    @Override
+
     public int getX() {
-        return posX;
+        return this.posX;
     }
 
-    @Override
     public int getY() {
-        return posY;
+        return this.posY;
     }
 
-    @Override
-    public void fullBreathNumber(){
-        if(isInCorner())
-            setBreathNumber(2);
-        else if(isOnBorder())
-            setBreathNumber(3);
-        else
-            setBreathNumber(4); //
-    }
-
-
-    @Override
-    public int getBreathNumber() {
-        return breath;
-    }
-
-    @Override
-    public  void setBreathNumber(int x) {
-        this.breath=x;
-    }
-
-    @Override
-    public void setX(int x) {
-        posX=x;
-    }
-
-    @Override
-    public void setY(int y) {
-        posY=y;
-
-    }
-
-    @Override
-    public boolean isInCorner() {
-        return (getX() == 0 && getY() == 0) || (getX() == 12 & getY() == 0) || (getX() == 12 & getY() == 12) || (getX() == 0 & getY() == 12);
-    }
-
-    @Override
-    public boolean isInCentre() {
-        return !isOnBorder() && !isInCorner();
-
-    }
-
-    @Override
-    public boolean isOnBorder() {
-        if(!isInCorner()) {
-            return getX() == 0 || getY() == 0 || getX() == 12 || getY() == 12;
+    public void fullBreathNumber() {
+        if (this.isInCorner()) {
+            this.setBreathNumber(2);
+        } else if (this.isOnBorder()) {
+            this.setBreathNumber(3);
+        } else {
+            this.setBreathNumber(4);
         }
-        return false;
+
     }
 
-    @Override
-    public boolean[][] getBreathPosition(){
-        return BreathPosition;
+    public int getBreathNumber() {
+        return this.breath;
     }
-    @Override
+
+    public void setBreathNumber(int x) {
+        this.breath = x;
+    }
+
+    public void setX(int x) {
+        this.posX = x;
+    }
+
+    public void setY(int y) {
+        this.posY = y;
+    }
+
+    public boolean isInCorner() {
+        return this.getX() == 0 && this.getY() == 0 || this.getX() == 12 & this.getY() == 0 || this.getX() == 12 & this.getY() == 12 || this.getX() == 0 & this.getY() == 12;
+    }
+
+    public boolean isInCentre() {
+        return !this.isOnBorder() && !this.isInCorner();
+    }
+
+    public boolean isOnBorder() {
+        return !this.isInCorner() && (this.getX() == 0 || this.getY() == 0 || this.getX() == 12 || this.getY() == 12);
+    }
+
+    public boolean[][] getBreathPosition() {
+        return this.BreathPosition;
+    }
+
     public void takeBreath(int x, int y) {
-        BreathPosition[x][y]=true;
-        this.breath=this.breath-1;
+        this.BreathPosition[x][y] = true;
+        --this.breath;
     }
 
-
-
-    @Override
-    public int getSize(){
-
-        return size;
-    }
-    @Override
-    public Color getColor()
-    {
-        return color;
+    public void addBreath(int x, int y) {
+        this.BreathPosition[x][y] = false;
+        ++this.breath;
     }
 
-    @Override
+    public int getSize() {
+        return this.size;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
     public void setColor(Color c) {
-        this.color=c;
+        this.color = c;
     }
 
-    @Override
     public void setSize(int i) {
-        this.size=i;
+        this.size = i;
     }
 }
-
