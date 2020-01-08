@@ -90,6 +90,7 @@ public class Board extends JPanel {
                 this.Buttons[i][j].setContentAreaFilled(false);
                 this.Buttons[i][j].setFocusPainted(false);
                 this.Buttons[i][j].setCursor(this.cursor);
+                this.Buttons[i][j].setEnabled(false);
                 this.add(this.Buttons[i][j]);
             }
         }
