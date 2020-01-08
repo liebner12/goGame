@@ -17,6 +17,7 @@ public class GoGameGui extends JFrame {
     private Window window;
     private Container container = getContentPane();
     private Results results;
+
     public GoGameGui() throws IOException {
         setLayout(null);
         setTitle("GoGame");

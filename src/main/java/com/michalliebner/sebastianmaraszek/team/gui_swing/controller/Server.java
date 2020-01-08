@@ -1,9 +1,10 @@
 package com.michalliebner.sebastianmaraszek.team.gui_swing.controller;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server{
+public class Server {
     private ServerSocket server;
     private Socket connection;
     private ObjectInputStream input;
@@ -11,37 +12,40 @@ public class Server{
     private VirtualBoard board;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
-    private int type=2;
-    private int changeTurn=0;
-    public Server(){
-        board=new VirtualBoard();
+    private int type = 2;
+    private int changeTurn = 0;
+    private int newTurn = 1;
+
+    public Server() {
+        board = new VirtualBoard();
         System.out.println("Server started");
     }
-    public void startRunning(){
-        try{
+
+    public void startRunning() {
+        try {
             server = new ServerSocket(2137);
             waitForConnection();
             gameMode();
             connection.close();
 
-            while (true){
-                try{
-                    if(type==0)
+            while (true) {
+                try {
+                    if (type == 0)
                         board.PlayWithBot();
-                    if(type==1)
+                    if (type == 1)
                         board.PlayWithHuman();
-                    if(changeTurn==1)
+                    if (changeTurn == 1)
                         passTurn();
                     waitForConnection();
                     boardReceived();
                     boardOutput();
-                }catch (ClassNotFoundException e) {
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                } finally{
+                } finally {
                     closeCrap();
                 }
             }
-        }catch(Exception Exception){
+        } catch (Exception Exception) {
             Exception.printStackTrace();
         }
     }
@@ -54,13 +58,13 @@ public class Server{
         connection.close();
     }
 
-    private void waitForConnection()throws IOException{
+    private void waitForConnection() throws IOException {
         connection = server.accept();
         System.out.println("connected");
 
     }
 
-    private void boardOutput()throws IOException{
+    private void boardOutput() throws IOException {
         output = new ObjectOutputStream(connection.getOutputStream());
         output.writeObject(board.getGameBoard());
         output.flush();
@@ -73,13 +77,18 @@ public class Server{
         outputStream.flush();
         outputStream.writeInt(board.BlackPrisoners());
         outputStream.flush();
+        outputStream.writeInt(board.whichTurn());
+        outputStream.flush();
     }
+
     private void boardReceived() throws IOException, ClassNotFoundException {
-        if(type==0||type==1) {
+        if (type == 0 || type == 1) {
             inputStream = new DataInputStream(connection.getInputStream());
             changeTurn = inputStream.readInt();
             System.out.println(changeTurn);
             passTurn();
+            newTurn = inputStream.readInt();
+            board.setTurn(newTurn);
             input = new ObjectInputStream(connection.getInputStream());
             TwoInt received = (TwoInt) input.readObject();
             board.addPiece(received.getX(), received.getY());
@@ -87,12 +96,12 @@ public class Server{
         }
     }
 
-    private void gameMode() throws IOException{
-        if(type==0)
+    private void gameMode() throws IOException {
+        if (type == 0)
             board.PlayWithBot();
-        if(type==1)
+        if (type == 1)
             board.PlayWithHuman();
-        if(type==2){
+        if (type == 2) {
             inputStream = new DataInputStream(connection.getInputStream());
             type = inputStream.readInt();
             System.out.println(type);
@@ -100,9 +109,11 @@ public class Server{
         }
 
     }
-    private void passTurn(){
-        if(changeTurn==1) {
+
+    private void passTurn() {
+        if (changeTurn == 1) {
             board.changeTurn();
+
         }
     }
 

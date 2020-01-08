@@ -1,20 +1,20 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.DecisionFrame;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ConnectButton extends JButton {
-    private static final int WIDTH = 172;
+public class EndGameButton extends JButton {
+    private static final int WIDTH = 362;
     private static final int HEIGHT = 40;
-
-    ConnectButton() {
+    public EndGameButton() {
         Cursor cursor= new Cursor(Cursor.HAND_CURSOR);
         setCursor(cursor);
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setBounds(20, 100, WIDTH, HEIGHT);
-        setText("Multiplayer");
+        setBounds(20, 300, WIDTH, HEIGHT);
+        setText("End Game");
     }
 
     @Override
@@ -34,6 +34,4 @@ public class ConnectButton extends JButton {
         g2.dispose();
         super.paintComponent(g);
     }
-
-
 }

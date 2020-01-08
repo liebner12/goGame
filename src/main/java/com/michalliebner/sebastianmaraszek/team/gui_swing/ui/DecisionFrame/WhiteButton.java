@@ -1,20 +1,21 @@
-package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.StartButtonFrame;
+package com.michalliebner.sebastianmaraszek.team.gui_swing.ui.DecisionFrame;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class ConnectButton extends JButton {
+public class WhiteButton extends JButton {
     private static final int WIDTH = 172;
     private static final int HEIGHT = 40;
 
-    ConnectButton() {
+    WhiteButton() {
         Cursor cursor= new Cursor(Cursor.HAND_CURSOR);
         setCursor(cursor);
         setForeground(new Color(222, 227, 225));
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        setBounds(20, 100, WIDTH, HEIGHT);
-        setText("Multiplayer");
+        setBounds(212, 55, WIDTH, HEIGHT);
+        setText("White Player Starts");
     }
 
     @Override
@@ -34,6 +35,5 @@ public class ConnectButton extends JButton {
         g2.dispose();
         super.paintComponent(g);
     }
-
 
 }
