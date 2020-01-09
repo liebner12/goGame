@@ -1,29 +1,128 @@
 @startuml
 
-class CLIENT
-
+package CLIENT{
+class GoGameGui{
+Initializes whole look
+components()
+GoGameGui()
+}
+class Controller{
+Contains all listeners
+and connects with server
+initComponents()
+initListeners()
+processInformation()
+}
+class Board{
+Shows board
+Board()
+addButtons()
+play(List<Piece> pieceList)
+}
+class WinnerFrame{
+Shows frame with winner
+WinnerFramePanel()
+}
+class UIPanel{
+Shows PassButton,StartButton,
+SurrenderButton
+initUI()
+}
+class Results{
+Shows JTextFields with territory
+prisoners and whole score
+whoTurn()
+whiteResults()
+blackResults()
+}
+class DecisionFrame{
+Shows decision frame with
+option to end or continue game
+initDecisionFrame()
+setText()
+}
+class StartFrame{
+components()
+StartFrame()
+Shows new frame
+with game modes
+}
+class WindowPanel{
+Outer frame for app
+initExitButton()
+}
+}
 package SERVER <<Cloud>> {
-Interface Stone{
+Interface Piece{
 position
 color
-...
 }
-Class GUI{
-buttons
-board
-
-}
-Class Game{
+class VirtualBoard{
 Logical part of app
+Multiplayer()
+SinglePlayer()
+Pieces()
+Kills()
+Chains()
+Turn()
 }
-Class Controller{
-Controlling GUI based on Client input
+class PiecesChain{
+Contains information about
+chain of pieces
+Neighbours()
+Enemies()
+Breaths()
+contactsNumber()
 }
+class Player{
+Contains information about
+player and his pieces
+JoinChain()
+Color()
+Territory()
+Prisoners()
+Chain()
 }
-SERVER --|> CLIENT : Giving GUI and listening to commands
-CLIENT ---|> Controller: Sending message with wanted action
-Controller <--> Game : Moving, adding and deleting stones
-Controller --|> GUI : Changing stuff to display current game state and giving actions
-Stone --|> Controller : Receipe how to make a proper stone
+class BlackPiece{
+Contains information about
+black pieces
+Position()
+Breaths()
+Color()
+}
+class WhitePiece{
+Contains information about
+black pieces
+Position()
+Breaths()
+Color()
+}
+class Server{
+Connect with client controller
+process information
+startRunning()
+gameMode()
+passTurn()
+}
 
+}
+WindowPanel --|> GoGameGui
+GoGameGui --|>  Controller
+Results --|> GoGameGui
+Board --|> GoGameGui
+WinnerFrame --|> Controller
+UIPanel --|> GoGameGui
+DecisionFrame --|> Controller
+StartFrame --|> Controller
+Controller <-> Server : Sends results, logical part, turns.
+VirtualBoard --|> Server
+Piece -|> WhitePiece
+Piece -|> BlackPiece
+Piece -|> VirtualBoard
+Piece -|> Player
+Piece -|> PiecesChain
+PiecesChain --|> VirtualBoard
+BlackPiece --|> VirtualBoard
+WhitePiece --|> VirtualBoard
+Player --|> VirtualBoard
 @enduml

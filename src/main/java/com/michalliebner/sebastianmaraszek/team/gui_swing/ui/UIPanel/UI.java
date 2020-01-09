@@ -28,8 +28,6 @@ public class UI extends JPanel {
         passButton = new PassButton();
         startButton = new StartButton();
         surrenderButton = new SurrenderButton();
-
-
         add(passButton);
         add(surrenderButton);
         add(startButton);

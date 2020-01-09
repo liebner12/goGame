@@ -17,6 +17,8 @@ public class GoGameGui extends JFrame {
     private Results results;
 
     public GoGameGui() throws IOException {
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\liebn\\OneDrive\\Dokumenty\\goGame\\src\\main\\java\\com\\michalliebner\\sebastianmaraszek\\team\\gui_swing\\ui\\IconGo.png");
+        setIconImage(imageIcon.getImage());
         setLayout(null);
         setTitle("GoGame");
         setUndecorated(true);

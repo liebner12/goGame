@@ -83,10 +83,10 @@ public class GoGameGuiController {
         turnPoint2 = mainFrame.getResults().getPointTurn2();
         DecisionFramePanel decisionFramePanel = decisionFrame.getDecisionFramePanel();
         StartFramePanel startFramePanel = startFrame.getStartFramePanel();
-        startButton = ui.getStartButton();
-        surrenderButton = ui.getSurrenderButton();
+        startButton = mainFrame.getUIPanel().getStartButton();
+        surrenderButton = mainFrame.getUIPanel().getSurrenderButton();
         connectButton = startFramePanel.getConnectButton();
-        passButton = ui.getPassButton();
+        passButton = mainFrame.getUIPanel().getPassButton();
         offlineButton = startFramePanel.getOfflineButton();
         whiteResultTerritory = mainFrame.getResults().getWhiteResultTerritory();
         blackResultTerritory = mainFrame.getResults().getBlackResultTerritory();
@@ -228,18 +228,22 @@ public class GoGameGuiController {
         public void actionPerformed(ActionEvent e) {
             String whiteString = whiteScoresField.getText();
             String blackString = blackScoresField.getText();
-            inRow=0;
-            decisionFrame.setVisible(false);
-            ableToPlace(false);
-            passButton.setEnabled(false);
-            surrenderButton.setEnabled(false);
-            blackResultScore.setText(blackString);
-            whiteResultScore.setText(whiteString);
-            if(black>white)
-                winner.setText("Black player wins!!!");
-            if(black<white)
-                winner.setText("White player wins!!!");
-            winnerFrame.setVisible(true);
+            if(whiteScoresField.getText().equals("") || blackScoresField.getText().equals("")) {
+
+            }else{
+                inRow = 0;
+                decisionFrame.setVisible(false);
+                ableToPlace(false);
+                passButton.setEnabled(false);
+                surrenderButton.setEnabled(false);
+                blackResultScore.setText(blackString);
+                whiteResultScore.setText(whiteString);
+                if (black > white)
+                    winner.setText("Black player wins!!!");
+                if (black < white)
+                    winner.setText("White player wins!!!");
+                winnerFrame.setVisible(true);
+            }
         }
     }
     private class blackButtonListener implements ActionListener{
