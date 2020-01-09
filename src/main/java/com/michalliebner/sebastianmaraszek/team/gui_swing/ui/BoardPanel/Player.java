@@ -9,93 +9,28 @@ public class Player {
     private Color color;
     private int prisoners;
     private int territory;
-    private boolean turn;
-    public boolean[][] FieldsThatCouldJoin = new boolean[13][13];
     public PiecesChain tempToDelete = new PiecesChain();
     public PiecesChain tempToAdd = new PiecesChain();
-    public List<Piece> piecesCanJoin = new ArrayList();
-    public List<PiecesChain> ChainsCanJoin = new ArrayList();
     public List<Piece> PieceList = new ArrayList();
     public List<PiecesChain> ChainList = new ArrayList();
+    public List<PiecesChain> ChainsThatWillBeJoined = new ArrayList();
     public boolean isBot;
 
     public Player() {
     }
 
-    public void setFieldsThatCouldJoin() {
-        this.FieldsThatCouldJoin = new boolean[13][13];
-        this.piecesCanJoin = new ArrayList();
-        this.ChainsCanJoin = new ArrayList();
-        Object helpful;
-        if (this.color == Color.black) {
-            helpful = new BlackPiece();
-        } else {
-            helpful = new WhitePiece();
-        }
-
-        int i;
-        int j;
-        Iterator var4;
-        Iterator var6;
-        PiecesChain chain;
-        for(i = 0; i < 13; ++i) {
-            for(j = 0; j < 13; ++j) {
-                var4 = this.ChainList.iterator();
-
-                while(var4.hasNext()) {
-                    chain = (PiecesChain)var4.next();
-                    var6 = this.ChainList.iterator();
-
-                    while(var6.hasNext()) {
-                        chain = (PiecesChain)var6.next();
-                        if (chain != chain && chain.NeighboursPosition[i][j] == chain.NeighboursPosition[i][j] && chain.NeighboursPosition[i][j]) {
-                            this.ChainsCanJoin.add(chain);
-                            this.ChainsCanJoin.add(chain);
-                            this.FieldsThatCouldJoin[i][j] = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        for(i = 0; i < 13; ++i) {
-            label68:
-            for(j = 0; j < 13; ++j) {
-                if (this.FieldsThatCouldJoin[i][j]) {
-                    var4 = this.PieceList.iterator();
-
-                    while(true) {
-                        Piece piece;
-                        do {
-                            if (!var4.hasNext()) {
-                                continue label68;
-                            }
-
-                            piece = (Piece)var4.next();
-                            ((Piece)helpful).setX(i);
-                            ((Piece)helpful).setY(j);
-                        } while(!this.neighbourPieces((Piece)helpful, piece));
-
-                        var6 = this.ChainList.iterator();
-
-                        while(var6.hasNext()) {
-                            chain = (PiecesChain)var6.next();
-                            if (!chain.getChain().contains(piece)) {
-                                this.piecesCanJoin.add(piece);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    }
 
     private void ChainJoiner(PiecesChain chain1, PiecesChain chain2) {
         this.tempToDelete = chain2;
         this.tempToAdd = chain1;
     }
 
+    public void setChainList(){
+        for(PiecesChain chain : ChainList){
+            chain.setBreaths();
+            chain.setEnemiesPosition();
+
+        }    }
     private void ChainNeighbours(PiecesChain chain1, PiecesChain chain2) {
         Iterator var3 = chain1.getChain().iterator();
 

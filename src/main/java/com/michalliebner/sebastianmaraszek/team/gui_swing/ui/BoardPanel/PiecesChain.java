@@ -10,40 +10,13 @@ public class PiecesChain implements Cloneable {
     private List<Piece> pieces = new ArrayList();
     private Color color;
     private int breaths;
-    private int enemies;
+    public int enemies;
     private int contacts;
-    public boolean[][] NeighboursPosition = new boolean[13][13];
     private boolean[][] BreathsPosition = new boolean[13][13];
 
     public PiecesChain() {
     }
 
-    public void setNeighboursPosition() {
-        this.NeighboursPosition = new boolean[13][13];
-
-        int i;
-        int j;
-        for(i = 0; i < 13; ++i) {
-            for(j = 0; j < 13; ++j) {
-                this.NeighboursPosition[i][j] = true;
-            }
-        }
-
-        for(i = 0; i < 13; ++i) {
-            for(j = 0; j < 13; ++j) {
-                Iterator var3 = this.pieces.iterator();
-
-                while(var3.hasNext()) {
-                    Piece piece = (Piece)var3.next();
-                    this.NeighboursPosition[piece.getX()][piece.getY()] = false;
-                    if (piece.getBreathPosition()[i][j]) {
-                        this.NeighboursPosition[i][j] = false;
-                    }
-                }
-            }
-        }
-
-    }
 
     public void setEnemiesPosition() {
         this.enemies = 0;
@@ -54,11 +27,11 @@ public class PiecesChain implements Cloneable {
         for(i = 0; i < 13; ++i) {
             for(j = 0; j < 13; ++j) {
                 Iterator var3 = this.pieces.iterator();
-
                 while(var3.hasNext()) {
                     Piece piece = (Piece)var3.next();
                     if (piece.getBreathPosition()[i][j]) {
                         this.BreathsPosition[i][j] = true;
+                        ++this.enemies;
                     }
                 }
             }
@@ -67,51 +40,11 @@ public class PiecesChain implements Cloneable {
         for(i = 0; i < 13; ++i) {
             for(j = 0; j < 13; ++j) {
                 if (this.BreathsPosition[i][j]) {
-                    ++this.enemies;
+
                 }
             }
         }
 
-    }
-
-    public int eliminateCommonBreath() {
-        int adder = 0;
-        TwoInt last = new TwoInt(50, 50);
-        Object enemy;
-        if (this.color == Color.white) {
-            enemy = new BlackPiece();
-        } else {
-            enemy = new WhitePiece();
-        }
-
-        for(int i = 0; i < 13; ++i) {
-            label44:
-            for(int j = 0; j < 13; ++j) {
-                if (this.BreathsPosition[i][j]) {
-                    ((Piece)enemy).setX(i);
-                    ((Piece)enemy).setY(j);
-                    Iterator var6 = this.pieces.iterator();
-
-                    while(true) {
-                        Piece piece;
-                        do {
-                            if (!var6.hasNext()) {
-                                continue label44;
-                            }
-
-                            piece = (Piece)var6.next();
-                        } while(piece.getX() == last.getX() && piece.getY() == last.getY());
-
-                        last = new TwoInt(piece.getX(), piece.getY());
-                        if (this.neighbourPieces(piece, (Piece)enemy)) {
-                            ++adder;
-                        }
-                    }
-                }
-            }
-        }
-
-        return adder;
     }
 
     public void contactsNumber() {
@@ -154,7 +87,7 @@ public class PiecesChain implements Cloneable {
 
     public int EnemiesNumber() {
         this.setEnemiesPosition();
-        return this.eliminateCommonBreath();
+        return this.enemies;
     }
 
     public int ContactsNumber() {
@@ -188,7 +121,7 @@ public class PiecesChain implements Cloneable {
         }
 
         this.setEnemiesPosition();
-        this.setNeighboursPosition();
+
         this.color = piece.getColor();
     }
 

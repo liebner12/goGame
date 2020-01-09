@@ -90,13 +90,16 @@ public class VirtualBoard{
     }
 
     public void SinglePlayer(int x, int y){
-        if (checkFree(x,y)) {
-            TwoInt bot = PlayBotPiece();
-            if (!turn) {//ruch uzytkownika taki sam jak w multiplayerze
-                PlayBlackPiece(x, y);
-            } else {
-                PlayWhitePiece(bot.getX(), bot.getY());//ruch bota
+        TwoInt bot=PlayBotPiece();
+        if(!turn){
+            if(!checkFree(x,y)){
+                changeTurn();
             }
+            if(checkFree(x,y))//ruch uzytkownika taki sam jak w multiplayerze
+            PlayBlackPiece(x,y);
+        }
+        else{
+            PlayWhitePiece(bot.getX(),bot.getY());//ruch bota
         }
     }
 
@@ -161,8 +164,7 @@ public class VirtualBoard{
                 LastPiece = piece2;
             }
         }
-        if(!possiblekill)
-            return true;
+
         return true;
 
     }
@@ -344,7 +346,8 @@ public class VirtualBoard{
             }
         }
         PieceList.removeAll(toRemove);
-
+        BlackPlayer.setChainList();
+        WhitePlayer.setChainList();
 
     }
     /** Bardzo wazna i rozbudowana funkcja, okreslajace zachowanie pionka kiedy stoi obok innego pionka
@@ -374,16 +377,17 @@ public class VirtualBoard{
 
     private void handleChains(Color color){
         List <PiecesChain> chainsToRemove=new ArrayList<>();
-        if(color==BLACK)
-        {
+        if(color==BLACK){
             for(PiecesChain chain : BlackPlayer.ChainList){
-                if(chain.BreathsNumber()==0){
+                System.out.println(chain.BreathsNumber()+ "--" + chain.getChain().size() + "black" );
+                if(chain.BreathsNumber()<=0){
                     chainsToRemove.add(chain);
                 }
             }
         }
         else{
             for(PiecesChain chain : WhitePlayer.ChainList){
+                System.out.println(chain.BreathsNumber()+ "--" + chain.getChain().size() + "white" );
                 if(chain.BreathsNumber()==0){
                     chainsToRemove.add(chain);
                 }
@@ -409,10 +413,12 @@ public class VirtualBoard{
             }
         }
         if(color==BLACK){
+            BlackPlayer.setPrisoners(BlackPlayer.getPrisoners()+chain.getChain().size());
             BlackPlayer.ChainList.remove(chain);
             BlackPlayer.PieceList.removeAll(toRemove);
         }
         else{
+            WhitePlayer.setPrisoners(WhitePlayer.getPrisoners()+chain.getChain().size());
             WhitePlayer.PieceList.removeAll(toRemove);
             WhitePlayer.ChainList.remove(chain);
         }
@@ -514,14 +520,11 @@ public class VirtualBoard{
 
     public int WhiteTerritory() {
         return WhitePlayer.setTerritory(WhitePlayer.getTerritory());
-        // System.out.println("\nTERYTORIUM BIALEGO:"+WhitePlayer.getTerritory());
-        //System.out.println("UWIEZIENI BIALEGO:"+WhitePlayer.getPrisoners());
     }
 
     public int BlackTerritory() {
         return BlackPlayer.setTerritory(BlackPlayer.getTerritory());
-        //  System.out.println("TERYTORIUM CZARNEGO:"+BlackPlayer.getTerritory());
-        // System.out.println("UWIEZIENI CZARNEGO:"+BlackPlayer.getPrisoners());
+
     }
 
     public int BlackPrisoners() {
