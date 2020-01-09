@@ -59,7 +59,7 @@ public class Server {
 
     private void waitForConnection() throws IOException {
         connection = server.accept();
-        System.out.println("connected");
+
 
     }
 
@@ -84,7 +84,6 @@ public class Server {
         if (type == 0 || type == 1) {
             inputStream = new DataInputStream(connection.getInputStream());
             changeTurn = inputStream.readInt();
-            System.out.println(changeTurn);
             passTurn();
             int newTurn = inputStream.readInt();
             board.setTurn(newTurn);
@@ -103,7 +102,6 @@ public class Server {
         if (type == 2) {
             inputStream = new DataInputStream(connection.getInputStream());
             type = inputStream.readInt();
-            System.out.println(type);
             inputStream.close();
         }
 

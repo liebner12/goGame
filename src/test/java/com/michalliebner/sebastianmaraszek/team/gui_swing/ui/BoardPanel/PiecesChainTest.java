@@ -7,17 +7,37 @@ import org.junit.Test;
 public class PiecesChainTest {
     final PiecesChain piecesChain=new PiecesChain();
 
+
     @Test
     public void piecesChain() {
     }
 
+    @Test
+    public void eliminateCommonBreath(){
+        PiecesChain piecesChain=new PiecesChain();
+        Piece piece=new BlackPiece();
+        Piece piece2=new BlackPiece();
+        piece.setX(5);
+        piece.setY(5);
+        piece2.setX(6);
+        piece2.setY(5);
+
+        piecesChain.addPiece(piece);
+        piecesChain.addPiece(piece2);
+        piece.addBreath(5,12);
+        piece2.addBreath(11,6);
+
+        piecesChain.setBreaths();
+        piecesChain.setEnemiesPosition();
+        assertEquals(0,   piecesChain.EnemiesNumber());
+    }
     @Test
     public void getChain() {
         Piece piece=new BlackPiece();
         Piece piece2=new WhitePiece();
         piecesChain.addPiece(piece);
         piecesChain.addPiece(piece2);
-        assertEquals(piecesChain.getChain().size(),2);
+        assertEquals(piecesChain.getChain().size(),1);
         }
 
     @Test
